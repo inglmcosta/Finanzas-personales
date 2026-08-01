@@ -603,7 +603,6 @@ const DEFAULT_CATS = {
   Inversion:['MELI','TSLA','GOOGL','MT-Electro','MMM','Regalías MMM','SOLV','AL30','USDT','BTC','Orígenes','Zurich','MercadoPago']
 };
 
-// Tabla maestra: nombre → tipo de cotización
 const DEFAULT_ACTIVOS = [
   {nombre:'MELI',    tipo:'CantidadARS'},
   {nombre:'TSLA',    tipo:'CantidadARS'},
@@ -620,16 +619,68 @@ const DEFAULT_ACTIVOS = [
   {nombre:'MercadoPago',tipo:'ARS', billetera:true}
 ];
 
+// ── SUPABASE ───────────────────────────────────────────────
+const SUPABASE_URL = 'https://cveaszkzffgcgwoqmifn.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN2ZWFzemt6ZmZnY2d3b3FtaWZuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU1Mzg5ODQsImV4cCI6MjEwMTExNDk4NH0.vwbZv9SvS6lYGIQs0BReDm58wgY5MACFvzjXUlZJuh0';
+const H = {'Content-Type':'application/json','apikey':SUPABASE_KEY,'Authorization':'Bearer '+SUPABASE_KEY};
+
+async function dbGet(table, params='') {
+  const r = await fetch(`${SUPABASE_URL}/rest/v1/${table}?${params}`, {headers:{...H,'Prefer':'return=representation'}});
+  return r.ok ? r.json() : [];
+}
+async function dbInsert(table, data) {
+  const r = await fetch(`${SUPABASE_URL}/rest/v1/${table}`, {method:'POST', headers:{...H,'Prefer':'return=representation'}, body:JSON.stringify(data)});
+  return r.ok ? r.json() : null;
+}
+async function dbUpdate(table, match, data) {
+  const params = Object.entries(match).map(([k,v])=>`${k}=eq.${v}`).join('&');
+  const r = await fetch(`${SUPABASE_URL}/rest/v1/${table}?${params}`, {method:'PATCH', headers:{...H,'Prefer':'return=representation'}, body:JSON.stringify(data)});
+  return r.ok ? r.json() : null;
+}
+async function dbDelete(table, match) {
+  const params = Object.entries(match).map(([k,v])=>`${k}=eq.${v}`).join('&');
+  const r = await fetch(`${SUPABASE_URL}/rest/v1/${table}?${params}`, {method:'DELETE', headers:H});
+  return r.ok;
+}
+
+function txnToDb(t) {
+  return {
+    id: t.id,
+    tipo: t.tipo, cat: t.cat, monto: t.monto,
+    moneda: t.moneda||'ARS', cotizacion: t.cotizacion||null,
+    fecha: t.fecha, descripcion: t.desc||null, pago: t.pago||'efectivo',
+    cuotas: t.cuotas||null, cuotas_pagadas: t.cuotasPagadas||0,
+    monto_cuota: t.montoCuota||null, desfase: t.desfase||null,
+    unidades: t.unidades||null, billetera: t.billetera||null,
+    es_billetera_retiro: t.esBilleteraRetiro||false,
+    es_pago_resumen_tc: t.esPagoResumenTC||false,
+    es_estado_inicial: t.esEstadoInicial||false
+  };
+}
+
+function dbToTxn(r) {
+  return {
+    id: r.id, tipo: r.tipo, cat: r.cat, monto: r.monto,
+    moneda: r.moneda, cotizacion: r.cotizacion,
+    fecha: r.fecha, desc: r.descripcion, pago: r.pago,
+    cuotas: r.cuotas, cuotasPagadas: r.cuotas_pagadas,
+    montoCuota: r.monto_cuota, desfase: r.desfase,
+    unidades: r.unidades, billetera: r.billetera,
+    esBilleteraRetiro: r.es_billetera_retiro,
+    esPagoResumenTC: r.es_pago_resumen_tc,
+    esEstadoInicial: r.es_estado_inicial
+  };
+}
+
 // ── STATE ──────────────────────────────────────────────────
 let tipo    = 'Fijo';
 let pago    = 'efectivo';
 let cierro  = false;
 let moneda  = 'ARS';
-let txns    = JSON.parse(localStorage.getItem('fin_txns') || '[]');
+let txns    = [];
 let cats    = JSON.parse(localStorage.getItem('fin_cats') || JSON.stringify(DEFAULT_CATS));
-let activos = JSON.parse(localStorage.getItem('fin_activos') || JSON.stringify(DEFAULT_ACTIVOS));
-// snapshots: [{fecha, usdars, cotizaciones:{ticker:price}}]
-let snapshots = JSON.parse(localStorage.getItem('fin_snapshots') || '[]');
+let activos = [];
+let snapshots = [];
 let configTipo = 'Fijo';
 
 let now = new Date();
@@ -637,23 +688,66 @@ let aY = now.getFullYear(), aM = now.getMonth();
 let hY = now.getFullYear(), hM = now.getMonth();
 
 // ── INIT ───────────────────────────────────────────────────
-function init() {
+async function init() {
   document.getElementById('header-date').textContent =
     now.getDate() + ' ' + MESES[now.getMonth()] + ' ' + now.getFullYear();
   document.getElementById('inp-fecha').value = now.toISOString().split('T')[0];
-  // Set initial state
   tipo = 'Gasto'; subtipo = 'Fijo';
   document.getElementById('chip-Gasto').className = 'type-chip sel-gasto';
   document.getElementById('row-subtipo').classList.remove('hidden');
   document.getElementById('sub-fijo').className = 'pay-chip sel-efectivo';
+  document.getElementById('inp-monto').addEventListener('input', updateCuotaPreview);
+  document.getElementById('inp-cuotas').addEventListener('change', updateCuotaPreview);
+
+  showToast('Cargando datos…');
+
+  // Load from Supabase
+  const [dbTxns, dbActivos, dbSnaps, dbCotiz, dbCats] = await Promise.all([
+    dbGet('transacciones', 'order=fecha.asc&limit=5000'),
+    dbGet('activos', 'order=nombre.asc'),
+    dbGet('snapshots', 'order=fecha.asc'),
+    dbGet('snapshot_cotizaciones', 'limit=10000'),
+    dbGet('categorias', 'order=nombre.asc')
+  ]);
+
+  txns = dbTxns.map(dbToTxn);
+
+  // Activos: use DB if populated, else seed defaults
+  if (dbActivos.length) {
+    activos = dbActivos.map(a => ({nombre:a.nombre, tipo:a.tipo, billetera:a.es_billetera}));
+  } else {
+    activos = DEFAULT_ACTIVOS;
+    await Promise.all(DEFAULT_ACTIVOS.map(a => dbInsert('activos', {nombre:a.nombre, tipo:a.tipo, es_billetera:a.billetera||false})));
+  }
+
+  // Snapshots: merge cotizaciones
+  snapshots = dbSnaps.map(s => ({
+    id: s.id, fecha: s.fecha, usdars: s.usdars,
+    cotizaciones: Object.fromEntries(
+      dbCotiz.filter(c=>c.snapshot_id===s.id).map(c=>[c.activo, c.precio])
+    )
+  }));
+
+  // Cats: use DB if populated, else seed defaults
+  if (dbCats.length) {
+    cats = {Fijo:[],Variable:[],Ingreso:[],Inversion:[]};
+    dbCats.forEach(c => { if(cats[c.tipo]) cats[c.tipo].push(c.nombre); });
+  } else {
+    const seedCats = [];
+    Object.entries(DEFAULT_CATS).forEach(([tipo, nombres]) => {
+      nombres.forEach(nombre => seedCats.push({tipo, nombre}));
+    });
+    await dbInsert('categorias', seedCats);
+    cats = DEFAULT_CATS;
+  }
+
   updateCats();
   updateBilleteraSelector();
   renderAnalytics();
   renderHistorial();
   renderInversiones();
   renderConfig();
-  document.getElementById('inp-monto').addEventListener('input', updateCuotaPreview);
-  document.getElementById('inp-cuotas').addEventListener('change', updateCuotaPreview);
+  showToast('Datos cargados');
 }
 
 // ── TIPO ───────────────────────────────────────────────────
@@ -823,7 +917,7 @@ function toggleCurrency() {
 }
 
 // ── GUARDAR ────────────────────────────────────────────────
-function guardar() {
+async function guardar() {
   const monto    = parseFloat(document.getElementById('inp-monto').value);
   const cat      = document.getElementById('inp-cat').value;
   const fecha    = document.getElementById('inp-fecha').value;
@@ -837,32 +931,27 @@ function guardar() {
   if (!desc) { showToast('Agregá una descripción'); return; }
   if (pago==='cuotas'&&(!cuotas||cuotas<2)) { showToast('Ingresá la cantidad de cuotas'); return; }
 
-  // Resolve actual tipo for storage
   const tipoReal = tipo==='Gasto' ? subtipo : tipo;
   const base = {fecha, desc, moneda, cotizacion:cotiz, pago};
   if (pago==='cuotas') { base.cuotas=cuotas; base.cuotasPagadas=0; base.montoCuota=monto/cuotas; base.desfase=cierro?2:1; }
   if (pago==='tarjeta1') base.desfase=cierro?2:1;
 
+  const toInsert = [];
   if (tipo==='Inversion') {
     const txn = {...base, id:Date.now(), tipo:tipoReal, cat, monto};
     if (unidades) txn.unidades = unidades;
-    txns.push(txn);
+    toInsert.push(txn);
   } else if (billetera && pago==='efectivo') {
     const ts = Date.now();
-    txns.push({...base, id:ts, tipo:tipoReal, cat, monto, billetera});
-    txns.push({
-      id: ts+1, tipo:'Inversion', cat: billetera,
-      monto, moneda:'ARS', cotizacion:null,
-      fecha, pago:'efectivo',
-      desc: `Retiro → ${cat}${desc?' · '+desc:''}`,
-      unidades: -monto,
-      esBilleteraRetiro: true
-    });
+    toInsert.push({...base, id:ts, tipo:tipoReal, cat, monto, billetera});
+    toInsert.push({id:ts+1, tipo:'Inversion', cat:billetera, monto, moneda:'ARS', cotizacion:null, fecha, pago:'efectivo', desc:`Retiro → ${cat}${desc?' · '+desc:''}`, unidades:-monto, esBilleteraRetiro:true});
   } else {
-    txns.push({...base, id:Date.now(), tipo:tipoReal, cat, monto});
+    toInsert.push({...base, id:Date.now(), tipo:tipoReal, cat, monto});
   }
 
-  localStorage.setItem('fin_txns',JSON.stringify(txns));
+  await dbInsert('transacciones', toInsert.map(txnToDb));
+  toInsert.forEach(t => txns.push(t));
+
   ['inp-monto','inp-desc','inp-cotizacion','inp-unidades'].forEach(id=>{
     document.getElementById(id).value='';
   });
@@ -1360,7 +1449,7 @@ function updateResumenTotal() {
   document.getElementById('resumen-tc-total').textContent = fmt(total);
 }
 
-function pagarResumenTC() {
+async function pagarResumenTC() {
   const fecha = document.getElementById('tc-fecha').value;
   const desc  = document.getElementById('tc-desc').value.trim();
   const items = window._resumenItems || [];
@@ -1372,15 +1461,14 @@ function pagarResumenTC() {
   if (!desc)  { showToast('Agregá una descripción'); return; }
   if (!selectedItems.length) { showToast('Seleccioná al menos un gasto'); return; }
 
-  // Register real cash outflow
-  txns.push({
+  const txn = {
     id: Date.now(), tipo:'Variable', cat:'Tarjeta de crédito',
     monto: total, moneda:'ARS', cotizacion:null,
     fecha, desc, pago:'efectivo',
-    esPagoResumenTC: true,
-    itemsPagados: selectedItems.map(item => item.id)
-  });
-  localStorage.setItem('fin_txns', JSON.stringify(txns));
+    esPagoResumenTC: true
+  };
+  await dbInsert('transacciones', txnToDb(txn));
+  txns.push(txn);
 
   closeResumenModal();
   showToast(`Resumen registrado · ${fmt(total)}`);
@@ -1644,7 +1732,7 @@ function openSnapshot() {
 function closeSnapshot() { document.getElementById('modal-snapshot').classList.remove('open'); }
 function closeSnapshotOutside(e) { if(e.target===document.getElementById('modal-snapshot'))closeSnapshot(); }
 
-function saveSnapshot() {
+async function saveSnapshot() {
   const usdars = parseFloat(document.getElementById('snap-usdars').value);
   if(!usdars||usdars<=0){showToast('Ingresá la cotización USD/ARS');return;}
 
@@ -1658,13 +1746,17 @@ function saveSnapshot() {
     if(val>0)cotizaciones[a.nombre]=val;
   });
 
-  const snap = {
-    fecha: now.toISOString().split('T')[0],
-    usdars,
-    cotizaciones
-  };
+  // Insert snapshot
+  const snapData = await dbInsert('snapshots', {fecha: now.toISOString().split('T')[0], usdars});
+  if(!snapData||!snapData[0]) { showToast('Error guardando snapshot'); return; }
+  const snapId = snapData[0].id;
+
+  // Insert cotizaciones
+  const cotRows = Object.entries(cotizaciones).map(([activo,precio])=>({snapshot_id:snapId, activo, precio}));
+  if(cotRows.length) await dbInsert('snapshot_cotizaciones', cotRows);
+
+  const snap = { id:snapId, fecha: now.toISOString().split('T')[0], usdars, cotizaciones };
   snapshots.push(snap);
-  localStorage.setItem('fin_snapshots',JSON.stringify(snapshots));
   closeSnapshot();
   showToast('Snapshot guardado');
   renderInversiones();
@@ -1874,14 +1966,16 @@ function renderCatList(){
 }
 
 function updateActivoTipo(i, nuevoTipo) {
+  const nombre = activos[i].nombre;
   activos[i].tipo = nuevoTipo;
-  localStorage.setItem('fin_activos', JSON.stringify(activos));
+  dbUpdate('activos', {nombre}, {tipo: nuevoTipo});
   showToast('Tipo actualizado');
 }
 
 function updateActivoBilletera(i, esBilletera) {
+  const nombre = activos[i].nombre;
   activos[i].billetera = esBilletera;
-  localStorage.setItem('fin_activos', JSON.stringify(activos));
+  dbUpdate('activos', {nombre}, {es_billetera: esBilletera});
   updateBilleteraSelector();
   showToast(esBilletera ? 'Marcado como billetera virtual' : 'Quitado como billetera virtual');
 }
@@ -1897,48 +1991,105 @@ function updateBilleteraSelector() {
     billeteras.map(b => `<option value="${b.nombre}">${b.nombre}</option>`).join('');
 }
 
-function deleteCat(i){
+async function deleteCat(i){
+  const nombre = cats[configTipo][i];
   cats[configTipo].splice(i,1);
-  localStorage.setItem('fin_cats',JSON.stringify(cats));
-  renderCatList();updateCats();
+  await dbDelete('categorias', {tipo: configTipo, nombre});
+  renderCatList(); updateCats();
 }
 
-function addCat(){
+async function addCat(){
   const inp=document.getElementById('new-cat-input');
   const val=inp.value.trim();
   if(!val)return;
   if(!cats[configTipo])cats[configTipo]=[];
   if(cats[configTipo].includes(val)){showToast('Ya existe');return;}
   cats[configTipo].push(val);
-  localStorage.setItem('fin_cats',JSON.stringify(cats));
-  inp.value='';renderCatList();updateCats();showToast('Categoría agregada');
+  await dbInsert('categorias', {tipo: configTipo, nombre: val});
+  inp.value=''; renderCatList(); updateCats(); showToast('Categoría agregada');
 }
 
-function deleteActivo(i){
+async function deleteActivo(i){
   const nombre = activos[i].nombre;
   activos.splice(i,1);
-  // Also remove from cats.Inversion
+  await dbDelete('activos', {nombre});
   if(cats.Inversion){
-    cats.Inversion = cats.Inversion.filter(c=>c!==nombre);
-    localStorage.setItem('fin_cats',JSON.stringify(cats));
+    const idx = cats.Inversion.indexOf(nombre);
+    if(idx>=0) {
+      cats.Inversion.splice(idx,1);
+      await dbDelete('categorias', {tipo:'Inversion', nombre});
+    }
   }
-  localStorage.setItem('fin_activos',JSON.stringify(activos));
-  renderCatList();updateCats();
+  renderCatList(); updateCats();
 }
 
-function addActivo(){
+async function addActivo(){
   const nombre = document.getElementById('new-activo-nombre').value.trim().toUpperCase();
   const tipo   = document.getElementById('new-activo-tipo').value;
   if(!nombre||!tipo){showToast('Completá nombre y tipo');return;}
   if(activos.find(a=>a.nombre===nombre)){showToast('Ya existe ese activo');return;}
   activos.push({nombre,tipo});
+  await dbInsert('activos', {nombre, tipo, es_billetera:false});
   if(!cats.Inversion)cats.Inversion=[];
-  if(!cats.Inversion.includes(nombre))cats.Inversion.push(nombre);
-  localStorage.setItem('fin_activos',JSON.stringify(activos));
-  localStorage.setItem('fin_cats',JSON.stringify(cats));
+  if(!cats.Inversion.includes(nombre)){
+    cats.Inversion.push(nombre);
+    await dbInsert('categorias', {tipo:'Inversion', nombre});
+  }
   document.getElementById('new-activo-nombre').value='';
   document.getElementById('new-activo-tipo').value='';
-  renderCatList();updateCats();showToast('Activo agregado');
+  renderCatList(); updateCats(); showToast('Activo agregado');
+}
+
+async function guardarEstadoInicial() {
+  const fecha = document.getElementById('ei-fecha').value;
+  const efectivo = parseFloat(document.getElementById('ei-efectivo').value)||0;
+  if(!fecha){ showToast('Elegí una fecha de inicio'); return; }
+
+  const nuevasTxns = [];
+  const ts = Date.now();
+
+  if(efectivo>0) {
+    nuevasTxns.push({id:ts, tipo:'Ingreso', cat:'Saldo inicial', monto:efectivo,
+      moneda:'ARS', cotizacion:null, fecha, desc:'Efectivo en caja — estado inicial',
+      pago:'efectivo', esEstadoInicial:true});
+  }
+
+  getBilleteras().forEach((b,bi) => {
+    const val = parseFloat(document.getElementById('ei-bill-'+b.nombre.replace(/\s/g,'_'))?.value)||0;
+    if(val>0) {
+      nuevasTxns.push({id:ts+bi+1, tipo:'Inversion', cat:b.nombre, monto:val,
+        moneda:'ARS', cotizacion:null, fecha,
+        desc:`Saldo inicial ${b.nombre}`, pago:'efectivo',
+        unidades:val, esEstadoInicial:true});
+    }
+  });
+
+  eiTCRows.forEach((r,ri) => {
+    if(!r.cat||!r.monto||!r.cuotasRestantes) return;
+    nuevasTxns.push({
+      id: ts+10+ri, tipo:'Variable', cat: r.cat||'TC pendiente',
+      monto: r.monto * r.cuotasRestantes,
+      moneda:'ARS', cotizacion:null,
+      fecha, desc:`Compromiso inicial: ${r.cat}`,
+      pago:'cuotas', cuotas: r.cuotasRestantes,
+      cuotasPagadas: 0, montoCuota: r.monto,
+      desfase: 1, esEstadoInicial: true
+    });
+  });
+
+  // Delete existing estado inicial txns from DB
+  await fetch(`${SUPABASE_URL}/rest/v1/transacciones?es_estado_inicial=eq.true`, {method:'DELETE', headers:H});
+  txns = txns.filter(t=>!t.esEstadoInicial);
+
+  if(nuevasTxns.length) {
+    await dbInsert('transacciones', nuevasTxns.map(txnToDb));
+    nuevasTxns.forEach(t => txns.push(t));
+  }
+
+  eiTCRows = [];
+  renderEiTCRows();
+  showToast('Estado inicial guardado');
+  renderAnalytics(); renderHistorial(); renderPnl();
 }
 
 document.getElementById('new-cat-input').addEventListener('keydown',e=>{if(e.key==='Enter')addCat();});
@@ -1948,3 +2099,4 @@ init();
 </script>
 </body>
 </html>
+
