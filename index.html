@@ -12,21 +12,21 @@
   --bg: #F2F4F8;
   --surface: #FFFFFF;
   --surface2: #E8ECF2;
-
+ 
   /* Borders — navy-tinted */
   --border: rgba(13,27,62,0.09);
   --border-strong: rgba(13,27,62,0.20);
-
+ 
   /* Text — deep navy scale */
   --text: #0D1B3E;
   --text2: #4A5878;
   --text3: #8C96AE;
-
+ 
   /* Primary accent — Slate azul-gris */
   --slate: #3B5180;
   --slate-bg: #EBF0F8;
   --slate-light: #6B84AD;
-
+ 
   /* Semantic — muted premium palette */
   --green: #1A5C42;
   --green-bg: #EBF7F2;
@@ -40,15 +40,15 @@
   --purple-bg: #EEEAFB;
   --teal: #0E5244;
   --teal-bg: #E5F5F1;
-
+ 
   --radius: 10px;
   --radius-sm: 6px;
 }
-
+ 
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
 button{text-align:center;display:inline-flex;align-items:center;justify-content:center;}
 body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;max-width:480px;margin:0 auto;}
-
+ 
 /* HEADER */
 .app-header{
   background:var(--surface);
@@ -59,7 +59,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 }
 .app-header h1{font-size:16px;font-weight:500;letter-spacing:0.04em;color:var(--text);}
 .app-header .subtitle{font-size:11px;color:var(--text3);margin-top:2px;font-family:'DM Mono',monospace;letter-spacing:0.03em;}
-
+ 
 /* NAV */
 .bottom-nav{
   position:fixed;bottom:0;left:50%;transform:translateX(-50%);
@@ -73,13 +73,13 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .nav-btn{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;padding:0.55rem 0.4rem;background:none;border:none;cursor:pointer;color:var(--text3);font-family:'DM Sans',sans-serif;font-size:9px;font-weight:400;transition:color 0.15s;}
 .nav-btn.active{color:var(--slate);}
 .nav-btn svg{width:20px;height:20px;}
-
+ 
 .screen{display:none;padding:1.25rem 1.25rem 6rem;}
 .screen.active{display:block;}
-
+ 
 .section-label{font-size:10px;font-weight:500;color:var(--text3);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.75rem;margin-top:1.5rem;}
 .section-label:first-child{margin-top:0;}
-
+ 
 /* CARD — subtle shadow instead of flat border */
 .card{
   background:var(--surface);
@@ -88,7 +88,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
   box-shadow:0 1px 4px rgba(13,27,62,0.05);
   overflow:hidden;
 }
-
+ 
 /* TYPE GRID */
 .type-grid{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px;margin-bottom:1.25rem;}
 .type-chip{padding:0.55rem 0.25rem;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--surface);font-size:12px;color:var(--text2);cursor:pointer;text-align:center;transition:all 0.15s;font-family:'DM Sans',sans-serif;line-height:1.3;letter-spacing:0.01em;display:flex;align-items:center;justify-content:center;min-height:44px;}
@@ -96,17 +96,17 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .type-chip.sel-ingreso   {background:var(--green-bg); color:var(--green); border-color:rgba(26,92,66,0.2);}
 .type-chip.sel-inversion {background:var(--blue-bg);  color:var(--blue);  border-color:rgba(27,58,107,0.2);}
 .type-chip.sel-resumentc {background:var(--slate-bg); color:var(--slate); border-color:rgba(59,81,128,0.25);}
-
+ 
 /* PAY GRID */
 .pay-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:1.25rem;}
 .pay-chip{padding:0.5rem 0.25rem;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--surface);font-size:12px;color:var(--text2);cursor:pointer;text-align:center;transition:all 0.15s;font-family:'DM Sans',sans-serif;line-height:1.3;display:flex;align-items:center;justify-content:center;min-height:44px;}
 .pay-chip.sel-efectivo{background:var(--surface2);color:var(--text);border-color:var(--border-strong);}
 .pay-chip.sel-tarjeta1{background:var(--purple-bg);color:var(--purple);border-color:rgba(61,48,128,0.2);}
 .pay-chip.sel-cuotas{background:var(--purple-bg);color:var(--purple);border-color:rgba(61,48,128,0.2);}
-
+ 
 /* CIERRE TOGGLE */
 .cierre-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:1.25rem;}
-
+ 
 /* FORM ROWS */
 .form-row{display:flex;align-items:center;padding:0.85rem 1rem;border-bottom:1px solid var(--border);gap:0.75rem;background:var(--surface);overflow:hidden;}
 .form-row:last-child{border-bottom:none;}
@@ -117,11 +117,11 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .form-row.amount-row input{font-size:22px;font-family:'DM Mono',monospace;font-weight:500;min-width:0;}
 .currency-badge{font-size:11px;font-family:'DM Mono',monospace;font-weight:500;padding:3px 8px;border-radius:4px;cursor:pointer;border:1px solid var(--border-strong);color:var(--text2);background:var(--surface2);transition:all 0.15s;flex-shrink:0;letter-spacing:0.03em;}
 .currency-badge.usd{background:var(--blue-bg);color:var(--blue);border-color:rgba(27,58,107,0.25);}
-
+ 
 /* SAVE BUTTON — slate accent */
 .save-btn{width:100%;padding:1rem;background:var(--slate);color:white;border:none;border-radius:var(--radius);font-size:15px;font-weight:500;font-family:'DM Sans',sans-serif;cursor:pointer;margin-top:1.25rem;transition:opacity 0.15s;letter-spacing:0.02em;display:flex;align-items:center;justify-content:center;}
 .save-btn:active{opacity:0.85;}
-
+ 
 /* KPIs */
 .kpi-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:1.25rem;}
 .kpi-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:0.9rem 1rem;box-shadow:0 1px 4px rgba(13,27,62,0.05);}
@@ -133,24 +133,24 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .kpi-value.amber{color:var(--amber);}
 .kpi-value.purple{color:var(--purple);}
 .kpi-value.teal{color:var(--teal);}
-
+ 
 /* MONTH NAV */
 .month-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:0.65rem 1rem;box-shadow:0 1px 4px rgba(13,27,62,0.04);}
 .month-nav button{background:none;border:none;cursor:pointer;color:var(--text3);font-size:18px;padding:0 4px;line-height:1;transition:color 0.15s;}
 .month-nav button:hover{color:var(--slate);}
 .month-nav span{font-size:14px;font-weight:500;color:var(--text);letter-spacing:0.02em;}
-
+ 
 /* SETTINGS TABS */
 .settings-tipo-tabs{display:flex;gap:6px;margin-bottom:1rem;flex-wrap:wrap;}
 .stab{padding:0.4rem 0.85rem;border-radius:100px;border:1px solid var(--border);font-size:12px;cursor:pointer;background:var(--surface);color:var(--text2);font-family:'DM Sans',sans-serif;transition:all 0.15s;letter-spacing:0.01em;display:inline-flex;align-items:center;justify-content:center;}
 .stab.active{background:var(--slate);color:white;border-color:var(--slate);}
-
+ 
 /* INVESTMENT SCREEN */
 .inv-hero{background:linear-gradient(135deg,#0D1B3E 0%,#1B3A6B 100%);border-radius:var(--radius);padding:1.5rem;margin-bottom:1.25rem;text-align:center;box-shadow:0 4px 20px rgba(13,27,62,0.18);}
 .inv-hero-label{font-size:10px;color:rgba(255,255,255,0.55);text-transform:uppercase;letter-spacing:0.12em;margin-bottom:8px;font-weight:500;}
 .inv-hero-value{font-size:30px;font-weight:500;font-family:'DM Mono',monospace;letter-spacing:-0.02em;color:#FFFFFF;}
 .inv-hero-sub{font-size:13px;color:rgba(255,255,255,0.5);margin-top:5px;font-family:'DM Mono',monospace;}
-
+ 
 /* MODAL */
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(13,27,62,0.45);z-index:300;align-items:flex-end;justify-content:center;}
 .modal-overlay.open{display:flex;}
@@ -159,7 +159,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .modal-title{font-size:16px;font-weight:500;color:var(--text);letter-spacing:0.01em;}
 .modal-close{background:none;border:none;font-size:22px;cursor:pointer;color:var(--text3);padding:0 4px;}
 .modal-save{width:100%;padding:0.9rem;background:var(--slate);color:white;border:none;border-radius:var(--radius);font-size:15px;font-weight:500;font-family:'DM Sans',sans-serif;cursor:pointer;margin-top:1rem;letter-spacing:0.02em;display:flex;align-items:center;justify-content:center;}
-
+ 
 /* SNAPSHOT */
 .snapshot-btn{display:flex;align-items:center;justify-content:center;width:100%;padding:0.85rem;background:var(--teal);color:white;border:none;border-radius:var(--radius);font-size:14px;font-weight:500;font-family:'DM Sans',sans-serif;cursor:pointer;margin-top:1.25rem;letter-spacing:0.02em;box-shadow:0 2px 8px rgba(14,82,68,0.2);}
 .snap-row{display:flex;align-items:center;padding:0.75rem 0;border-bottom:1px solid var(--border);gap:0.75rem;}
@@ -168,7 +168,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .snap-input{flex:1;border:1px solid var(--border);border-radius:var(--radius-sm);padding:0.5rem 0.75rem;font-size:14px;font-family:'DM Mono',monospace;color:var(--text);background:var(--surface);text-align:right;outline:none;}
 .snap-input:focus{border-color:var(--slate);}
 .snap-unit{font-size:11px;color:var(--text3);width:36px;flex-shrink:0;text-align:right;}
-
+ 
 /* ADD CAT */
 .add-cat-row{display:flex;gap:8px;margin-top:0.75rem;}
 .add-cat-row input{flex:1;padding:0.65rem 0.9rem;border:1px solid var(--border);border-radius:var(--radius-sm);font-size:14px;font-family:'DM Sans',sans-serif;background:var(--surface);color:var(--text);outline:none;}
@@ -177,7 +177,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .add-activo-form{margin-top:0.75rem;display:flex;flex-direction:column;gap:8px;}
 .add-activo-form input,.add-activo-form select{width:100%;padding:0.65rem 0.9rem;border:1px solid var(--border);border-radius:var(--radius-sm);font-size:14px;font-family:'DM Sans',sans-serif;background:var(--surface);color:var(--text);outline:none;}
 .add-activo-btn{display:flex;align-items:center;justify-content:center;width:100%;padding:0.65rem;background:var(--slate);color:white;border:none;border-radius:var(--radius-sm);font-size:14px;font-family:'DM Sans',sans-serif;cursor:pointer;}
-
+ 
 /* CAT / ACTIVO ROWS */
 .cat-row{display:flex;align-items:center;padding:0.75rem 1rem;border-bottom:1px solid var(--border);gap:0.5rem;}
 .cat-row:last-child{border-bottom:none;}
@@ -190,7 +190,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .activo-cfg-tipo{font-size:11px;color:var(--slate);background:var(--slate-bg);padding:2px 7px;border-radius:4px;letter-spacing:0.02em;}
 .activo-cfg-del{background:none;border:none;cursor:pointer;color:var(--text3);font-size:20px;padding:0 4px;line-height:1;transition:color 0.15s;}
 .activo-cfg-del:hover{color:var(--red);}
-
+ 
 /* TXN LIST */
 .txn-item{display:flex;align-items:center;padding:0.85rem 1rem;border-bottom:1px solid var(--border);gap:0.75rem;}
 .txn-item:last-child{border-bottom:none;}
@@ -199,7 +199,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .txn-cat{font-size:14px;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .txn-sub{font-size:11px;color:var(--text3);margin-top:2px;letter-spacing:0.01em;}
 .txn-amount{font-size:14px;font-family:'DM Mono',monospace;font-weight:500;flex-shrink:0;}
-
+ 
 /* DEUDA CARDS */
 .deuda-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1rem;margin-bottom:10px;box-shadow:0 1px 4px rgba(13,27,62,0.04);}
 .deuda-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;}
@@ -211,7 +211,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .deuda-footer{display:flex;justify-content:space-between;}
 .deuda-footer span{font-size:12px;color:var(--text3);}
 .deuda-footer strong{font-size:12px;color:var(--text2);font-weight:500;}
-
+ 
 /* ACTIVO ROWS */
 .activo-row{display:flex;align-items:center;padding:0.9rem 1rem;border-bottom:1px solid var(--border);gap:0.75rem;}
 .activo-row:last-child{border-bottom:none;}
@@ -229,7 +229,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .bar-val{font-size:13px;font-family:'DM Mono',monospace;color:var(--text);}
 .bar-track{height:5px;background:var(--surface2);border-radius:3px;overflow:hidden;}
 .bar-fill{height:100%;border-radius:3px;}
-
+ 
 /* BARS */
 .bar-item{margin-bottom:10px;}
 .bar-meta{display:flex;justify-content:space-between;margin-bottom:4px;}
@@ -237,12 +237,12 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .bar-val{font-size:12px;font-family:'DM Mono',monospace;color:var(--text);}
 .bar-track{height:4px;background:var(--surface2);border-radius:3px;overflow:hidden;}
 .bar-fill{height:100%;border-radius:3px;}
-
+ 
 .toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--text);color:white;padding:0.6rem 1.25rem;border-radius:100px;font-size:13px;opacity:0;transition:all 0.25s;z-index:200;white-space:nowrap;box-shadow:0 4px 16px rgba(13,27,62,0.25);letter-spacing:0.02em;}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
 .hidden{display:none!important;}
 .empty-state{text-align:center;padding:2.5rem 1rem;color:var(--text3);font-size:13px;letter-spacing:0.01em;}
-
+ 
 /* P&L TABLE */
 .pnl-wrap{min-width:700px;padding:0 1.25rem 1rem;}
 .pnl-table{width:100%;border-collapse:collapse;font-size:11px;}
@@ -276,7 +276,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .cf-bar-track { flex: 1; height: 6px; background: var(--surface2); border-radius: 3px; overflow: hidden; }
 .cf-bar-fill { height: 100%; border-radius: 3px; }
 .cf-bar-val { font-size: 11px; font-family: 'DM Mono', monospace; color: var(--text2); width: 72px; text-align: right; flex-shrink: 0; }
-
+ 
 .toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--text);color:white;padding:0.6rem 1.25rem;border-radius:100px;font-size:13px;opacity:0;transition:all 0.25s;z-index:200;white-space:nowrap;}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
 .hidden{display:none!important;}
@@ -284,12 +284,12 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 </style>
 </head>
 <body>
-
+ 
 <div class="app-header">
   <h1>Finanzas personales</h1>
   <div class="subtitle" id="header-date"></div>
 </div>
-
+ 
 <!-- ═══════════════ INPUT ═══════════════ -->
 <div id="screen-input" class="screen active">
   <div class="section-label">Tipo de transacción</div>
@@ -299,7 +299,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
     <div class="type-chip"             id="chip-Inversion"  onclick="selectTipo('Inversion')">Inversión</div>
     <div class="type-chip"             id="chip-ResumenTC"  onclick="selectTipo('ResumenTC')" style="font-size:11px;line-height:1.3;">Pago<br>Resumen TC</div>
   </div>
-
+ 
   <div id="pay-section">
     <div class="section-label">Medio de pago</div>
     <div class="pay-grid">
@@ -308,7 +308,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
       <div class="pay-chip"              id="pay-cuotas"    onclick="selectPago('cuotas')">Tarjeta<br>cuotas</div>
     </div>
   </div>
-
+ 
   <div id="row-cierre" class="hidden">
     <div class="section-label">¿Ya cerró la tarjeta este mes?</div>
     <div class="cierre-grid">
@@ -317,7 +317,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
     </div>
     <div id="cierre-hint" style="font-size:12px;color:var(--text3);margin-bottom:1rem;margin-top:-0.5rem;"></div>
   </div>
-
+ 
   <!-- Panel ResumenTC — trigger only, modal handles the rest -->
   <div id="panel-resumen-tc" class="hidden">
     <div style="text-align:center;padding:1.5rem 1rem;">
@@ -325,7 +325,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
       <button onclick="openResumenModal()" style="width:100%;padding:0.9rem;background:var(--purple);color:white;border:none;border-radius:var(--radius);font-size:15px;font-weight:500;font-family:'DM Sans',sans-serif;cursor:pointer;">Ver gastos en tarjeta</button>
     </div>
   </div>
-
+ 
   <div class="section-label">Detalle</div>
   <div class="card">
     <div class="form-row hidden" id="row-subtipo">
@@ -385,7 +385,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
   </div>
   <button class="save-btn" onclick="guardar()">Guardar transacción</button>
 </div>
-
+ 
 <!-- ═══════════════ ANALYTICS ═══════════════ -->
 <div id="screen-analytics" class="screen">
   <!-- Year selector -->
@@ -394,40 +394,40 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
     <span id="analytics-year"></span>
     <button onclick="changeYear(1)">&#8594;</button>
   </div>
-
+ 
   <!-- KPI Caja -->
   <div class="kpi-card" id="kpi-caja" style="margin-bottom:1rem;padding:1.1rem 1.25rem;"></div>
-
+ 
   <!-- KPIs anuales -->
   <div class="kpi-grid" id="kpi-grid"></div>
-
+ 
   <!-- G1: Ingresos / Gastos columnas + línea inversiones -->
   <div class="section-label">Ingresos, gastos e inversiones</div>
   <div class="card" style="padding:1rem 0.5rem 0.5rem"><div id="chart-g1"></div></div>
-
+ 
   <!-- G2: Gastos por categoría anual (fijo vs variable) -->
   <div class="section-label">Gastos por categoría — Fijo vs Variable</div>
   <div class="card" style="padding:1rem 0.5rem 0.5rem"><div id="chart-g2"></div></div>
-
+ 
   <!-- G3: Fuentes de ingresos 100% stacked -->
   <div class="section-label">Fuentes de ingreso (100%)</div>
   <div class="card" style="padding:1rem 0.5rem 0.75rem"><div id="chart-g3"></div></div>
-
+ 
   <!-- G4: Deuda acumulada + tendencia -->
   <div class="section-label">Compromisos en tarjeta por mes</div>
   <div class="card" style="padding:1rem 0.5rem 0.5rem"><div id="chart-g4"></div></div>
   <div class="kpi-grid" id="kpi-deuda" style="margin-top:0.75rem;"></div>
   <div id="deuda-list" style="margin-bottom:1rem;"></div>
-
+ 
   <!-- G5: Heatmap inversiones -->
   <div class="section-label">Rendimiento de inversiones (% mensual en USD)</div>
   <div class="card" style="padding:1rem 0.75rem"><div id="chart-g5"></div></div>
-
+ 
   <!-- G6: Cashflow proyectado -->
   <div class="section-label">Cashflow proyectado — próximos 6 meses</div>
   <div class="card" style="padding:1rem 0.5rem 0.5rem"><div id="chart-g6"></div></div>
 </div>
-
+ 
 <!-- ═══════════════ INVERSIONES ═══════════════ -->
 <div id="screen-inversiones" class="screen">
   <div class="inv-hero">
@@ -440,7 +440,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
   <div class="card" id="inv-posiciones"></div>
   <button class="snapshot-btn" onclick="openSnapshot()">Actualizar cotizaciones (cierre de mes)</button>
 </div>
-
+ 
 <!-- ═══════════════ HISTORIAL ═══════════════ -->
 <div id="screen-historial" class="screen">
   <div class="month-nav">
@@ -451,7 +451,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
   <div class="section-label">Transacciones</div>
   <div class="card" id="txn-list"></div>
 </div>
-
+ 
 <!-- ═══════════════ CONFIG ═══════════════ -->
 <div id="screen-config" class="screen">
   <div class="settings-tipo-tabs" id="stabs"></div>
@@ -471,11 +471,11 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
     <input type="text" id="new-activo-nombre" placeholder="Nombre / ticker (ej: BTC, MELI)" maxlength="30"/>
     <button class="add-activo-btn" onclick="addActivo()">Agregar activo</button>
   </div>
-
+ 
   <!-- ESTADO INICIAL — shown only when Inicio tab active -->
   <div id="estado-inicial-section" class="hidden">
     <div style="font-size:12px;color:var(--text3);margin-bottom:0.75rem;margin-top:0.25rem;">Cargá el punto de partida al comenzar a usar la app. Podés volver acá cuando quieras para actualizar.</div>
-
+ 
     <div class="card" style="margin-bottom:0.75rem;">
       <div class="form-row">
         <label>Fecha inicio</label>
@@ -486,20 +486,20 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
         <input type="number" id="ei-efectivo" placeholder="0" inputmode="decimal"/>
       </div>
     </div>
-
+ 
     <div class="section-label" style="font-size:10px;">Billeteras virtuales</div>
     <div class="card" id="ei-billeteras-list" style="margin-bottom:0.75rem;"></div>
-
+ 
     <div class="section-label" style="font-size:10px;">Compromisos TC en curso</div>
     <div id="ei-tc-rows"></div>
     <button onclick="addEiTC()" style="width:100%;padding:0.6rem;background:none;border:1px dashed var(--border-strong);border-radius:var(--radius-sm);font-size:13px;color:var(--text2);cursor:pointer;margin-bottom:1rem;font-family:'DM Sans',sans-serif;">+ Agregar compromiso TC</button>
-
+ 
     <div style="font-size:12px;color:var(--text3);margin-bottom:0.75rem;">💡 Las posiciones de inversión se cargan desde la pantalla Cartera usando el snapshot mensual.</div>
-
+ 
     <button class="save-btn" onclick="guardarEstadoInicial()">Guardar estado inicial</button>
   </div>
 </div>
-
+ 
 <!-- ═══════════════ P&L ═══════════════ -->
 <div id="screen-pnl" class="screen" style="padding-left:0;padding-right:0;">
   <div style="padding:0 1.25rem 1rem;">
@@ -511,7 +511,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
   </div>
   <div id="pnl-table" style="overflow-x:auto;-webkit-overflow-scrolling:touch;"></div>
 </div>
-
+ 
 <!-- ═══════════════ BOTTOM NAV ═══════════════ -->
 <div class="bottom-nav">
   <button class="nav-btn active" id="nav-input" onclick="showScreen('input')">
@@ -539,7 +539,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
     Config
   </button>
 </div>
-
+ 
 <!-- ═══════════════ RESUMEN TC MODAL ═══════════════ -->
 <div class="modal-overlay" id="modal-resumen-tc" onclick="closeResumenModalOutside(event)">
   <div class="modal-sheet">
@@ -548,13 +548,13 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
       <button class="modal-close" onclick="closeResumenModal()">×</button>
     </div>
     <div style="font-size:12px;color:var(--text3);margin-bottom:1rem;">Seleccioná los gastos que están en este resumen. El total se calcula solo.</div>
-
+ 
     <!-- List of all TC transactions -->
     <div id="resumen-tc-items"></div>
-
+ 
     <!-- Divider -->
     <div style="border-top:1px solid var(--border);margin:1rem 0;"></div>
-
+ 
     <!-- Total and confirm -->
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;">
       <span style="font-size:13px;color:var(--text2);">Total seleccionado</span>
@@ -573,7 +573,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
     <button class="modal-save" style="background:var(--purple);" onclick="pagarResumenTC()">Registrar pago</button>
   </div>
 </div>
-
+ 
 <!-- ═══════════════ SNAPSHOT MODAL ═══════════════ -->
 <div class="modal-overlay" id="modal-snapshot" onclick="closeSnapshotOutside(event)">
   <div class="modal-sheet">
@@ -590,19 +590,19 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
     <button class="modal-save" onclick="saveSnapshot()">Guardar snapshot</button>
   </div>
 </div>
-
+ 
 <div class="toast" id="toast"></div>
-
+ 
 <script>
 const MESES = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
-
+ 
 const DEFAULT_CATS = {
   Fijo:    ['Auto','Casa','Dalton','Donaciones','Educación','Monotributo','Particular','Transporte'],
   Variable:['Ajustes','Auto','Casa','Dalton','Particular','Tarjeta de crédito','Transporte','Trabajo','Vacaciones'],
   Ingreso: ['Aguinaldo','Consultoría','Sueldo','Otro'],
   Inversion:['MELI','TSLA','GOOGL','MT-Electro','MMM','Regalías MMM','SOLV','AL30','USDT','BTC','Orígenes','Zurich','MercadoPago']
 };
-
+ 
 const DEFAULT_ACTIVOS = [
   {nombre:'MELI',    tipo:'CantidadARS'},
   {nombre:'TSLA',    tipo:'CantidadARS'},
@@ -618,12 +618,12 @@ const DEFAULT_ACTIVOS = [
   {nombre:'Zurich',  tipo:'ARS'},
   {nombre:'MercadoPago',tipo:'ARS', billetera:true}
 ];
-
+ 
 // ── SUPABASE ───────────────────────────────────────────────
 const SUPABASE_URL = 'https://cveaszkzffgcgwoqmifn.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN2ZWFzemt6ZmZnY2d3b3FtaWZuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU1Mzg5ODQsImV4cCI6MjEwMTExNDk4NH0.vwbZv9SvS6lYGIQs0BReDm58wgY5MACFvzjXUlZJuh0';
 const H = {'Content-Type':'application/json','apikey':SUPABASE_KEY,'Authorization':'Bearer '+SUPABASE_KEY};
-
+ 
 async function dbGet(table, params='') {
   const r = await fetch(`${SUPABASE_URL}/rest/v1/${table}?${params}`, {headers:{...H,'Prefer':'return=representation'}});
   return r.ok ? r.json() : [];
@@ -642,7 +642,7 @@ async function dbDelete(table, match) {
   const r = await fetch(`${SUPABASE_URL}/rest/v1/${table}?${params}`, {method:'DELETE', headers:H});
   return r.ok;
 }
-
+ 
 function txnToDb(t) {
   return {
     id: t.id,
@@ -657,7 +657,7 @@ function txnToDb(t) {
     es_estado_inicial: t.esEstadoInicial||false
   };
 }
-
+ 
 function dbToTxn(r) {
   return {
     id: r.id, tipo: r.tipo, cat: r.cat, monto: r.monto,
@@ -671,7 +671,7 @@ function dbToTxn(r) {
     esEstadoInicial: r.es_estado_inicial
   };
 }
-
+ 
 // ── STATE ──────────────────────────────────────────────────
 let tipo    = 'Fijo';
 let pago    = 'efectivo';
@@ -682,11 +682,11 @@ let cats    = JSON.parse(localStorage.getItem('fin_cats') || JSON.stringify(DEFA
 let activos = [];
 let snapshots = [];
 let configTipo = 'Fijo';
-
+ 
 let now = new Date();
 let aY = now.getFullYear(), aM = now.getMonth();
 let hY = now.getFullYear(), hM = now.getMonth();
-
+ 
 // ── INIT ───────────────────────────────────────────────────
 async function init() {
   document.getElementById('header-date').textContent =
@@ -698,20 +698,33 @@ async function init() {
   document.getElementById('sub-fijo').className = 'pay-chip sel-efectivo';
   document.getElementById('inp-monto').addEventListener('input', updateCuotaPreview);
   document.getElementById('inp-cuotas').addEventListener('change', updateCuotaPreview);
-
+ 
   showToast('Cargando datos…');
-
+ 
   // Load from Supabase
+  // Load all transactions with pagination (1000 per page)
+  async function fetchAllTxns() {
+    let all = [], offset = 0, pageSize = 1000;
+    while(true) {
+      const page = await dbGet('transacciones', `order=fecha.asc&limit=${pageSize}&offset=${offset}`);
+      if(!page || !page.length) break;
+      all = all.concat(page);
+      if(page.length < pageSize) break;
+      offset += pageSize;
+    }
+    return all;
+  }
+ 
   const [dbTxns, dbActivos, dbSnaps, dbCotiz, dbCats] = await Promise.all([
-    dbGet('transacciones', 'order=fecha.asc&limit=5000'),
+    fetchAllTxns(),
     dbGet('activos', 'order=nombre.asc'),
     dbGet('snapshots', 'order=fecha.asc'),
     dbGet('snapshot_cotizaciones', 'limit=10000'),
     dbGet('categorias', 'order=nombre.asc')
   ]);
-
+ 
   txns = dbTxns.map(dbToTxn);
-
+ 
   // Activos: use DB if populated, else seed defaults
   if (dbActivos.length) {
     activos = dbActivos.map(a => ({nombre:a.nombre, tipo:a.tipo, billetera:a.es_billetera}));
@@ -719,7 +732,7 @@ async function init() {
     activos = DEFAULT_ACTIVOS;
     await Promise.all(DEFAULT_ACTIVOS.map(a => dbInsert('activos', {nombre:a.nombre, tipo:a.tipo, es_billetera:a.billetera||false})));
   }
-
+ 
   // Snapshots: merge cotizaciones
   snapshots = dbSnaps.map(s => ({
     id: s.id, fecha: s.fecha, usdars: s.usdars,
@@ -727,7 +740,7 @@ async function init() {
       dbCotiz.filter(c=>c.snapshot_id===s.id).map(c=>[c.activo, c.precio])
     )
   }));
-
+ 
   // Cats: use DB if populated, else seed defaults
   if (dbCats.length) {
     cats = {Fijo:[],Variable:[],Ingreso:[],Inversion:[]};
@@ -740,7 +753,7 @@ async function init() {
     await dbInsert('categorias', seedCats);
     cats = DEFAULT_CATS;
   }
-
+ 
   updateCats();
   updateBilleteraSelector();
   renderAnalytics();
@@ -749,10 +762,10 @@ async function init() {
   renderConfig();
   showToast('Datos cargados');
 }
-
+ 
 // ── TIPO ───────────────────────────────────────────────────
 let subtipo = 'Fijo'; // default subtipo for Gasto
-
+ 
 function selectTipo(t) {
   tipo = t;
   ['Gasto','Ingreso','Inversion','ResumenTC'].forEach(x => {
@@ -767,7 +780,7 @@ function selectTipo(t) {
   const detailCard = document.querySelector('#screen-input .card');
   if(detailCard) detailCard.classList.toggle('hidden', isResumen);
   document.querySelector('#screen-input .save-btn').classList.toggle('hidden', isResumen);
-
+ 
   // Reset tarjeta state whenever leaving Gasto
   if (!isGasto) {
     pago = 'efectivo';
@@ -782,19 +795,19 @@ function selectTipo(t) {
       if (el) el.className = 'pay-chip' + (id==='pay-efectivo' ? ' sel-efectivo' : '');
     });
   }
-
+ 
   if(isResumen) { openResumenModal(); return; }
   updateCats();
   onCatChange();
 }
-
+ 
 function selectSubtipo(s) {
   subtipo = s;
   document.getElementById('sub-fijo').className    = 'pay-chip'+(s==='Fijo'?' sel-efectivo':'')    ;
   document.getElementById('sub-variable').className = 'pay-chip'+(s==='Variable'?' sel-efectivo':'');
   updateCats();
 }
-
+ 
 function updateCats() {
   const sel = document.getElementById('inp-cat');
   sel.innerHTML = '';
@@ -810,7 +823,7 @@ function updateCats() {
   document.getElementById('row-billetera').classList.toggle('hidden', !showBilletera);
   onCatChange();
 }
-
+ 
 // When category changes for inversión, adapt form fields
 function onCatChange() {
   if (tipo !== 'Inversion') {
@@ -821,13 +834,13 @@ function onCatChange() {
   }  const cat = document.getElementById('inp-cat').value;
   const activo = activos.find(a => a.nombre === cat);
   if (!activo) return;
-
+ 
   const rowUnd = document.getElementById('row-unidades');
   const lblMonto = document.getElementById('lbl-monto');
   const lblCotiz = document.getElementById('lbl-cotizacion');
   const rowCotiz = document.getElementById('row-cotizacion');
   const ctog = document.getElementById('currency-toggle');
-
+ 
   if (activo.tipo === 'CantidadARS') {
     // Monto en ARS → unidades = monto / cotización (precio en ARS)
     lblMonto.textContent = 'Monto ARS';
@@ -863,7 +876,7 @@ function onCatChange() {
   document.getElementById('inp-monto').oninput = () => { calcUnidades(); updateCuotaPreview(); };
   document.getElementById('inp-cotizacion').oninput = calcUnidades;
 }
-
+ 
 function calcUnidades() {
   const monto = parseFloat(document.getElementById('inp-monto').value) || 0;
   const precio = parseFloat(document.getElementById('inp-cotizacion').value) || 0;
@@ -872,7 +885,7 @@ function calcUnidades() {
     document.getElementById('inp-unidades').value = (monto / precio).toFixed(6);
   }
 }
-
+ 
 // ── PAGO ───────────────────────────────────────────────────
 function selectPago(p) {
   pago = p;
@@ -888,7 +901,7 @@ function selectPago(p) {
   updateCats(); // handles billetera row visibility
   updateCuotaPreview();
 }
-
+ 
 function selectCierre(v) {
   cierro = v;
   document.getElementById('cierre-no').className = 'pay-chip'+(!v?' sel-efectivo':'');
@@ -898,14 +911,14 @@ function selectCierre(v) {
     : 'No cerró → el gasto entra al resumen de este mes → 1.ª cuota el mes que viene';
   document.getElementById('cierre-hint').textContent = hint;
 }
-
+ 
 function updateCuotaPreview() {
   if (pago!=='cuotas') return;
   const m = parseFloat(document.getElementById('inp-monto').value)||0;
   const c = parseInt(document.getElementById('inp-cuotas').value)||1;
   document.getElementById('cuota-preview').textContent = m>0 ? fmt(m/c)+' / cuota' : '—';
 }
-
+ 
 // ── CURRENCY ───────────────────────────────────────────────
 function toggleCurrency() {
   if (tipo==='Inversion') return; // controlled by activo type
@@ -915,7 +928,7 @@ function toggleCurrency() {
   btn.className = 'currency-badge'+(moneda==='USD'?' usd':'');
   document.getElementById('row-cotizacion').classList.toggle('hidden', moneda!=='USD');
 }
-
+ 
 // ── GUARDAR ────────────────────────────────────────────────
 async function guardar() {
   const monto    = parseFloat(document.getElementById('inp-monto').value);
@@ -926,16 +939,16 @@ async function guardar() {
   const cuotas   = pago==='cuotas' ? parseInt(document.getElementById('inp-cuotas').value) : null;
   const unidades = parseFloat(document.getElementById('inp-unidades').value)||null;
   const billetera = document.getElementById('inp-billetera').value || null;
-
+ 
   if (!monto||monto<=0||!fecha||!cat) { showToast('Completá monto, categoría y fecha'); return; }
   if (!desc) { showToast('Agregá una descripción'); return; }
   if (pago==='cuotas'&&(!cuotas||cuotas<2)) { showToast('Ingresá la cantidad de cuotas'); return; }
-
+ 
   const tipoReal = tipo==='Gasto' ? subtipo : tipo;
   const base = {fecha, desc, moneda, cotizacion:cotiz, pago};
   if (pago==='cuotas') { base.cuotas=cuotas; base.cuotasPagadas=0; base.montoCuota=monto/cuotas; base.desfase=cierro?2:1; }
   if (pago==='tarjeta1') base.desfase=cierro?2:1;
-
+ 
   const toInsert = [];
   if (tipo==='Inversion') {
     const txn = {...base, id:Date.now(), tipo:tipoReal, cat, monto};
@@ -948,10 +961,10 @@ async function guardar() {
   } else {
     toInsert.push({...base, id:Date.now(), tipo:tipoReal, cat, monto});
   }
-
+ 
   await dbInsert('transacciones', toInsert.map(txnToDb));
   toInsert.forEach(t => txns.push(t));
-
+ 
   ['inp-monto','inp-desc','inp-cotizacion','inp-unidades'].forEach(id=>{
     document.getElementById(id).value='';
   });
@@ -960,14 +973,14 @@ async function guardar() {
   showToast(billetera ? `Guardado + retiro de ${billetera}` : 'Transacción guardada');
   renderAnalytics(); renderHistorial(); renderInversiones();
 }
-
+ 
 // ── UTILS ──────────────────────────────────────────────────
 function showToast(msg) {
   const t=document.getElementById('toast');
   t.textContent=msg; t.classList.add('show');
   setTimeout(()=>t.classList.remove('show'),2200);
 }
-
+ 
 function showScreen(s) {
   document.querySelectorAll('.screen').forEach(el=>el.classList.remove('active'));
   document.querySelectorAll('.nav-btn').forEach(el=>el.classList.remove('active'));
@@ -979,22 +992,22 @@ function showScreen(s) {
   if(s==='pnl')renderPnl();
   if(s==='config')renderConfig();
 }
-
+ 
 function changeMonth(sc,dir) {
   hM+=dir;if(hM>11){hM=0;hY++}if(hM<0){hM=11;hY--}renderHistorial();
 }
-
+ 
 function getTxns(y,m) {
   return txns.filter(t=>{const d=new Date(t.fecha+'T12:00:00');return d.getFullYear()===y&&d.getMonth()===m;});
 }
-
+ 
 function montoARS(t) { return(t.moneda==='USD'&&t.cotizacion)?t.monto*t.cotizacion:t.monto; }
 function fmt(n) { return '$'+Math.round(n).toLocaleString('es-AR'); }
 function fmtUSD(n) { return 'US$ '+n.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2}); }
 function fmtPct(n) { return (n>=0?'+':'')+n.toFixed(1)+'%'; }
-
+ 
 // ── ANALYTICS ──────────────────────────────────────────────
-
+ 
 // Cuota que cae en un año/mes dado para una transacción en cuotas
 function cuotaEnMes(t, y, m) {
   if (t.pago !== 'cuotas' || !t.cuotas) return 0;
@@ -1004,7 +1017,7 @@ function cuotaEnMes(t, y, m) {
   if (diff < 0 || diff >= t.cuotas) return 0;
   return t.montoCuota * (t.moneda==='USD' && t.cotizacion ? t.cotizacion : 1);
 }
-
+ 
 // Tarjeta 1 pago: cae en el mes del desfase
 function tarjeta1EnMes(t, y, m) {
   if (t.pago !== 'tarjeta1') return 0;
@@ -1014,30 +1027,30 @@ function tarjeta1EnMes(t, y, m) {
   if (diffMeses !== desfase) return 0;
   return montoARS(t);
 }
-
+ 
 // ── ANALYTICS — year-based ─────────────────────────────────
 let analyticsYear = now.getFullYear();
-
+ 
 function changeYear(dir) {
   analyticsYear += dir;
   renderAnalytics();
 }
-
+ 
 function getMonthData(y, m) {
   return txns.filter(t => {
     const d = new Date(t.fecha+'T12:00:00');
     return d.getFullYear()===y && d.getMonth()===m;
   });
 }
-
+ 
 function renderAnalytics() {
   document.getElementById('analytics-year').textContent = analyticsYear;
   const Y = analyticsYear;
-
+ 
   // Build 12-month arrays
   const monthLabels = MESES.map(m=>m.slice(0,3));
   const ingresos=[], gastosFijo=[], gastosVar=[], inversiones=[], deudaMes=[];
-
+ 
   for(let m=0;m<12;m++){
     const data = getMonthData(Y,m);
     ingresos.push(data.filter(t=>t.tipo==='Ingreso').reduce((s,t)=>s+montoARS(t),0));
@@ -1048,13 +1061,13 @@ function renderAnalytics() {
     const tc1M    = txns.filter(t=>t.pago==='tarjeta1').reduce((s,t)=>s+tarjeta1EnMes(t,Y,m),0);
     deudaMes.push(cuotasM+tc1M);
   }
-
+ 
   const totalIng  = ingresos.reduce((a,b)=>a+b,0);
   const totalF    = gastosFijo.reduce((a,b)=>a+b,0);
   const totalV    = gastosVar.reduce((a,b)=>a+b,0);
   const totalInv  = inversiones.reduce((a,b)=>a+b,0);
   const balance   = totalIng - totalF - totalV;
-
+ 
   // Saldo de caja acumulado a hoy (todos los años)
   const saldoCaja = txns.reduce((s,t) => {
     if (t.tipo==='Ingreso') return s + montoARS(t);
@@ -1063,26 +1076,26 @@ function renderAnalytics() {
     if (t.tipo==='Inversion' && !t.esBilleteraRetiro && !t.esEstadoInicial) return s - montoARS(t);
     return s;
   }, 0);
-
+ 
   document.getElementById('kpi-caja').innerHTML=`
     <div class="kpi-label">Saldo de caja disponible</div>
     <div class="kpi-value ${saldoCaja>=0?'green':'red'}" style="font-size:24px;">${fmt(saldoCaja)}</div>
   `;
-
+ 
   document.getElementById('kpi-grid').innerHTML=`
     <div class="kpi-card"><div class="kpi-label">Ingresos ${Y}</div><div class="kpi-value green">${fmt(totalIng)}</div></div>
     <div class="kpi-card"><div class="kpi-label">Gastos ${Y}</div><div class="kpi-value red">${fmt(totalF+totalV)}</div></div>
     <div class="kpi-card"><div class="kpi-label">Inversiones ${Y}</div><div class="kpi-value blue">${fmt(totalInv)}</div></div>
     <div class="kpi-card"><div class="kpi-label">Balance ${Y}</div><div class="kpi-value ${balance>=0?'green':'red'}">${fmt(balance)}</div></div>
   `;
-
+ 
   renderG1(monthLabels, ingresos, gastosFijo, gastosVar, inversiones);
   renderG2(Y);
   renderG3(monthLabels, Y);
   renderG4(monthLabels, deudaMes);
   renderG5(Y);
   renderG6();
-
+ 
   // Tarjeta KPIs + list (using current month for detail)
   const mesHoy = now.getFullYear()*12+now.getMonth();
   const cuotasMesActual = txns.filter(t=>t.pago==='cuotas').reduce((s,t)=>s+cuotaEnMes(t,now.getFullYear(),now.getMonth()),0);
@@ -1120,12 +1133,12 @@ function renderAnalytics() {
     </div>`;
   }).join('');}
 }
-
+ 
 // SVG helpers
 function svgBar(x,y,w,h,fill,rx=2){return`<rect x="${x}" y="${y}" width="${Math.max(0,w)}" height="${Math.max(0,h)}" fill="${fill}" rx="${rx}"/>`;}
 function svgText(x,y,txt,opts=''){return`<text x="${x}" y="${y}" ${opts}>${txt}</text>`;}
 function fmtK(n){if(n>=1000000)return(n/1000000).toFixed(1)+'M';if(n>=1000)return Math.round(n/1000)+'K';return Math.round(n);}
-
+ 
 // G1: Columnas Ingresos/Gastos + línea Inversiones
 function renderG1(labels, ing, fijo, vari, inv){
   const el=document.getElementById('chart-g1');
@@ -1135,14 +1148,14 @@ function renderG1(labels, ing, fijo, vari, inv){
   const maxV=Math.max(...ing,...gastos,...inv,1);
   const bW=(cW/12)*0.7, gap=(cW/12)*0.3/2;
   let bars='',lines='',ticks='',axisY='';
-
+ 
   // Y axis ticks
   [0,0.25,0.5,0.75,1].forEach(p=>{
     const y=pad.t+cH*(1-p);
     ticks+=`<line x1="${pad.l}" x2="${W-pad.r}" y1="${y}" y2="${y}" stroke="#e0ddd8" stroke-width="1"/>`;
     axisY+=svgText(pad.l-4,y+4,fmtK(maxV*p),'text-anchor="end" font-size="9" fill="#A8A59E"');
   });
-
+ 
   // Bars + line points
   const pts=[];
   for(let i=0;i<12;i++){
@@ -1157,13 +1170,13 @@ function renderG1(labels, ing, fijo, vari, inv){
   }
   lines=`<polyline points="${pts.map(p=>p.join(',')).join(' ')}" fill="none" stroke="#1A5FA8" stroke-width="2"/>`;
   pts.forEach(([x,y])=>{lines+=`<circle cx="${x}" cy="${y}" r="3" fill="#1A5FA8"/>`;});
-
+ 
   // Legend
   const leg=`<rect x="${pad.l}" y="2" width="8" height="8" fill="#1D7A4F" rx="1"/><text x="${pad.l+11}" y="10" font-size="9" fill="#6B6860">Ingresos</text><rect x="${pad.l+60}" y="2" width="8" height="8" fill="#B03A2E" rx="1"/><text x="${pad.l+72}" y="10" font-size="9" fill="#6B6860">Gastos</text><circle cx="${pad.l+122}" cy="6" r="4" fill="#1A5FA8"/><text x="${pad.l+129}" y="10" font-size="9" fill="#6B6860">Inversiones</text>`;
-
+ 
   el.innerHTML=`<svg viewBox="0 0 ${W} ${H}" style="width:100%;display:block">${ticks}${bars}${lines}${axisY}${leg}</svg>`;
 }
-
+ 
 // G2: Gastos por categoría (barra horizontal, fijo vs variable)
 function renderG2(Y){
   const el=document.getElementById('chart-g2');
@@ -1193,7 +1206,7 @@ function renderG2(Y){
   const leg=`<rect x="${pad.l}" y="0" width="8" height="8" fill="#B03A2E" rx="1"/><text x="${pad.l+11}" y="8" font-size="9" fill="#6B6860">Fijo</text><rect x="${pad.l+38}" y="0" width="8" height="8" fill="#8A5C00" rx="1"/><text x="${pad.l+51}" y="8" font-size="9" fill="#6B6860">Variable</text>`;
   el.innerHTML=`<svg viewBox="0 0 ${W} ${H+12}" style="width:100%;display:block"><g transform="translate(0,12)">${svg}</g>${leg}</svg>`;
 }
-
+ 
 // G3: Fuentes de ingreso 100% stacked columns
 function renderG3(labels, Y){
   const el=document.getElementById('chart-g3');
@@ -1204,7 +1217,7 @@ function renderG3(labels, Y){
   const cW=W-pad.l-pad.r, cH=H-pad.t-pad.b;
   const bW=(cW/12)*0.6, gap=(cW/12)*0.2;
   let bars='', ticks='', leg='';
-
+ 
   for(let i=0;i<12;i++){
     const data=getMonthData(Y,i).filter(t=>t.tipo==='Ingreso');
     const total=data.reduce((s,t)=>s+montoARS(t),0);
@@ -1230,7 +1243,7 @@ function renderG3(labels, Y){
   });
   el.innerHTML=`<svg viewBox="0 0 ${W} ${H+14}" style="width:100%;display:block">${ticks}${bars}<g transform="translate(${pad.l},${H+2})">${leg}</g></svg>`;
 }
-
+ 
 // G4: Deuda mensual tarjeta + línea de tendencia
 function renderG4(labels, deuda){
   const el=document.getElementById('chart-g4');
@@ -1239,7 +1252,7 @@ function renderG4(labels, deuda){
   const maxV=Math.max(...deuda,1);
   const bW=(cW/12)*0.6;
   let bars='',ticks='',axisY='';
-
+ 
   // Tendencia lineal simple
   const pts=deuda.map((v,i)=>[pad.l+(i+0.5)*(cW/12), pad.t+cH-(v/maxV)*cH]);
   const n=12, sumX=pts.reduce((s,_,i)=>s+i,0), sumY=pts.reduce((s,p)=>s+p[1],0);
@@ -1247,37 +1260,37 @@ function renderG4(labels, deuda){
   const slope=(n*sumXY-sumX*sumY)/(n*sumX2-sumX*sumX);
   const intercept=(sumY-slope*sumX)/n;
   const tx0=pts[0][0], ty0=intercept, tx1=pts[11][0], ty1=slope*11+intercept;
-
+ 
   [0,0.5,1].forEach(p=>{
     const y=pad.t+cH*(1-p);
     ticks+=`<line x1="${pad.l}" x2="${W-pad.r}" y1="${y}" y2="${y}" stroke="#e0ddd8" stroke-width="1"/>`;
     axisY+=svgText(pad.l-4,y+4,fmtK(maxV*p),'text-anchor="end" font-size="9" fill="#A8A59E"');
   });
-
+ 
   deuda.forEach((v,i)=>{
     const x=pad.l+i*(cW/12)+(cW/12-bW)/2;
     const h=(v/maxV)*cH;
     bars+=svgBar(x,pad.t+cH-h,bW,h,'#5B3FA8');
     ticks+=svgText(pad.l+(i+0.5)*(cW/12),H-5,labels[i],'text-anchor="middle" font-size="9" fill="#A8A59E"');
   });
-
+ 
   el.innerHTML=`<svg viewBox="0 0 ${W} ${H}" style="width:100%;display:block">${ticks}${bars}${axisY}<line x1="${tx0}" y1="${ty0}" x2="${tx1}" y2="${ty1}" stroke="#B03A2E" stroke-width="1.5" stroke-dasharray="4,2"/></svg>`;
 }
-
+ 
 // G5: Heatmap inversiones % mensual USD
 function renderG5(Y){
   const el=document.getElementById('chart-g5');
   const snapYear=snapshots.filter(s=>s.fecha.startsWith(Y));
   const tickers=activos.filter(a=>!a.billetera).map(a=>a.nombre);
   if(!snapYear.length||!tickers.length){el.innerHTML='<div class="empty-state">Cargá snapshots para ver el heatmap</div>';return;}
-
+ 
   const cellH=22, labelW=72, cellW=Math.floor((( el.offsetWidth||320)-labelW)/12);
   const W=labelW+cellW*12, H=tickers.length*cellH+28;
   let svg='';
-
+ 
   // Headers
   MESES.forEach((m,i)=>{svg+=svgText(labelW+i*cellW+cellW/2,14,m.slice(0,1),'text-anchor="middle" font-size="9" fill="#A8A59E"');});
-
+ 
   tickers.forEach((ticker,ti)=>{
     const y=28+ti*cellH;
     svg+=svgText(labelW-4,y+14,ticker,'text-anchor="end" font-size="10" fill="#1A1916" font-family="monospace"');
@@ -1300,7 +1313,7 @@ function renderG5(Y){
   });
   el.innerHTML=`<svg viewBox="0 0 ${W} ${H}" style="width:100%;display:block">${svg}</svg>`;
 }
-
+ 
 // G6: Cashflow proyectado 6 meses
 function renderG6(){
   const el=document.getElementById('chart-g6');
@@ -1355,7 +1368,7 @@ function renderG6(){
   const leg=`<rect x="${pad.l}" y="2" width="8" height="8" fill="#1D7A4F" rx="1"/><text x="${pad.l+11}" y="10" font-size="9" fill="#6B6860">Ing</text><rect x="${pad.l+35}" y="2" width="8" height="8" fill="#B03A2E" rx="1"/><text x="${pad.l+46}" y="10" font-size="9" fill="#6B6860">Fijo</text><rect x="${pad.l+72}" y="2" width="8" height="8" fill="#8A5C00" rx="1"/><text x="${pad.l+83}" y="10" font-size="9" fill="#6B6860">Var</text><rect x="${pad.l+104}" y="2" width="8" height="8" fill="#5B3FA8" rx="1"/><text x="${pad.l+115}" y="10" font-size="9" fill="#6B6860">TC</text><text x="${pad.l+135}" y="10" font-size="9" fill="#A8A59E">~ proyectado</text>`;
   el.innerHTML=`<svg viewBox="0 0 ${W} ${H+12}" style="width:100%;display:block">${ticks}${bars}${axisY}<g transform="translate(0,${H})">${leg}</g></svg>`;
 }
-
+ 
 function openResumenModal() {
   document.getElementById('tc-fecha').value = now.toISOString().split('T')[0];
   document.getElementById('tc-desc').value = '';
@@ -1364,14 +1377,14 @@ function openResumenModal() {
 }
 function closeResumenModal() { document.getElementById('modal-resumen-tc').classList.remove('open'); }
 function closeResumenModalOutside(e) { if(e.target===document.getElementById('modal-resumen-tc')) closeResumenModal(); }
-
+ 
 function renderResumenItems() {
   const el = document.getElementById('resumen-tc-items');
   const mesHoy = now.getFullYear()*12 + now.getMonth();
-
+ 
   // Build list: all active TC transactions
   const items = [];
-
+ 
   // Cuotas activas
   txns.filter(t => t.pago==='cuotas').forEach(t => {
     const start = new Date(t.fecha+'T12:00:00');
@@ -1390,7 +1403,7 @@ function renderResumenItems() {
       txn: t
     });
   });
-
+ 
   // Tarjeta 1 pago activos (no pagados aún — los que caen después de hoy)
   txns.filter(t => t.pago==='tarjeta1').forEach(t => {
     const start = new Date(t.fecha+'T12:00:00');
@@ -1406,13 +1419,13 @@ function renderResumenItems() {
       txn: t
     });
   });
-
+ 
   if (!items.length) {
     el.innerHTML = '<div class="empty-state">Sin gastos activos en tarjeta</div>';
     updateResumenTotal();
     return;
   }
-
+ 
   el.innerHTML = items.map((item, i) => `
     <div onclick="toggleResumenItem(${i})" id="ritem-${i}" style="display:flex;align-items:center;padding:0.85rem 0;border-bottom:1px solid var(--border);gap:0.75rem;cursor:pointer;">
       <div id="rcheck-${i}" style="width:20px;height:20px;border-radius:5px;border:1.5px solid var(--border-strong);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all 0.15s;"></div>
@@ -1423,13 +1436,13 @@ function renderResumenItems() {
       <div style="font-size:14px;font-family:'DM Mono',monospace;font-weight:500;color:var(--purple);flex-shrink:0;">${fmt(item.monto)}</div>
     </div>
   `).join('');
-
+ 
   // Store items for JS access
   window._resumenItems = items;
   window._resumenSelected = new Array(items.length).fill(false);
   updateResumenTotal();
 }
-
+ 
 function toggleResumenItem(i) {
   window._resumenSelected[i] = !window._resumenSelected[i];
   const sel = window._resumenSelected[i];
@@ -1441,14 +1454,14 @@ function toggleResumenItem(i) {
   row.style.background = sel ? 'var(--purple-bg)' : '';
   updateResumenTotal();
 }
-
+ 
 function updateResumenTotal() {
   const items = window._resumenItems || [];
   const sel = window._resumenSelected || [];
   const total = items.reduce((s, item, i) => s + (sel[i] ? item.monto : 0), 0);
   document.getElementById('resumen-tc-total').textContent = fmt(total);
 }
-
+ 
 async function pagarResumenTC() {
   const fecha = document.getElementById('tc-fecha').value;
   const desc  = document.getElementById('tc-desc').value.trim();
@@ -1456,11 +1469,11 @@ async function pagarResumenTC() {
   const sel   = window._resumenSelected || [];
   const selectedItems = items.filter((_,i) => sel[i]);
   const total = selectedItems.reduce((s, item) => s + item.monto, 0);
-
+ 
   if (!fecha) { showToast('Elegí la fecha de pago'); return; }
   if (!desc)  { showToast('Agregá una descripción'); return; }
   if (!selectedItems.length) { showToast('Seleccioná al menos un gasto'); return; }
-
+ 
   const txn = {
     id: Date.now(), tipo:'Variable', cat:'Tarjeta de crédito',
     monto: total, moneda:'ARS', cotizacion:null,
@@ -1469,28 +1482,28 @@ async function pagarResumenTC() {
   };
   await dbInsert('transacciones', txnToDb(txn));
   txns.push(txn);
-
+ 
   closeResumenModal();
   showToast(`Resumen registrado · ${fmt(total)}`);
   renderAnalytics(); renderHistorial(); renderPnl();
   selectTipo('Gasto');
 }
-
+ 
 function renderTCCompromisos() {} // legacy stub
-
-
-
-
+ 
+ 
+ 
+ 
 // ── P&L ────────────────────────────────────────────────────
 let pnlYear = now.getFullYear();
-
+ 
 function changePnlYear(dir) { pnlYear += dir; renderPnl(); }
-
+ 
 function renderPnl() {
   document.getElementById('pnl-year').textContent = pnlYear;
   const Y = pnlYear;
   const mesActual = now.getFullYear()===Y ? now.getMonth() : 11;
-
+ 
   // Build column data: 12 months + YTD
   const cols = []; // {label, ing, fijo, var, inv}
   for (let m=0; m<12; m++) {
@@ -1502,7 +1515,7 @@ function renderPnl() {
     const inv  = data.filter(t=>t.tipo==='Inversion'&&!t.esBilleteraRetiro).reduce((s,t)=>s+montoARS(t),0);
     cols.push({ label: MESES[m].slice(0,3), ing, fijo, vari, inv, empty: !hasData && m > mesActual });
   }
-
+ 
   // YTD = sum of months with data up to today (or full year if past)
   const ytdMonths = cols.filter((_,i) => i <= mesActual);
   const ytd = {
@@ -1514,7 +1527,7 @@ function renderPnl() {
     isYtd: true
   };
   const allCols = [...cols, ytd];
-
+ 
   // Derived metrics per column
   function derived(c) {
     const margOp  = c.ing - c.fijo;
@@ -1525,7 +1538,7 @@ function renderPnl() {
     const neto   = margBruto - c.inv;
     return { margOp, margOpPct, margBruto, margBrutoPct, invPct, neto };
   }
-
+ 
   // Format helpers
   const fmtCell = (n, isYtd=false) => {
     if (n===0) return '<span class="pnl-zero">—</span>';
@@ -1541,7 +1554,7 @@ function renderPnl() {
     if (!n) return '<span class="pnl-zero">—</span>';
     return fmtK(n);
   };
-
+ 
   // Build rows
   const rows = [
     { label:'Ingresos',          type:'data',      fn: c => fmtAmt(c.ing) },
@@ -1560,7 +1573,7 @@ function renderPnl() {
     { sep: true },
     { label:'Margen neto',       type:'neto',      fn: c => fmtCell(derived(c).neto) },
   ];
-
+ 
   // Build header
   let thead = '<tr><th></th>';
   allCols.forEach(c => {
@@ -1568,7 +1581,7 @@ function renderPnl() {
     thead += `<th class="${cls}">${c.label}</th>`;
   });
   thead += '</tr>';
-
+ 
   // Build body
   let tbody = '';
   rows.forEach(row => {
@@ -1585,7 +1598,7 @@ function renderPnl() {
     });
     tbody += '</tr>';
   });
-
+ 
   document.getElementById('pnl-table').innerHTML = `
     <div class="pnl-wrap">
       <table class="pnl-table">
@@ -1594,38 +1607,38 @@ function renderPnl() {
       </table>
     </div>`;
 }
-
+ 
 // ── INVERSIONES ────────────────────────────────────────────
-
+ 
 // Get net units for a ticker (loads minus retiros)
 function getUnidades(ticker) {
   return txns
     .filter(t => t.tipo==='Inversion' && t.cat===ticker && t.unidades != null)
     .reduce((s,t) => s + t.unidades, 0);
 }
-
+ 
 // Get total ARS invested in a ticker
 function getInvertidoARS(ticker) {
   return txns
     .filter(t => t.tipo==='Inversion' && t.cat===ticker)
     .reduce((s,t) => s+montoARS(t), 0);
 }
-
+ 
 function getLastSnapshot() {
   if(!snapshots.length) return null;
   return snapshots[snapshots.length-1];
 }
-
+ 
 function getPrevSnapshot() {
   if(snapshots.length<2) return null;
   return snapshots[snapshots.length-2];
 }
-
+ 
 function activoValorUSD(activo, snap) {
   if(!snap) return 0;
   const precio = snap.cotizaciones[activo.nombre] || 0;
   const usdars = snap.usdars || 1;
-
+ 
   if(activo.tipo==='CantidadARS') {
     // precio en ARS → valor en USD = unidades * precio / usdars
     const und = getUnidades(activo.nombre);
@@ -1642,20 +1655,20 @@ function activoValorUSD(activo, snap) {
     return precio / usdars;
   }
 }
-
+ 
 function renderInversiones() {
   const snap = getLastSnapshot();
   const prevSnap = getPrevSnapshot();
-
+ 
   // Total cartera
   let totalUSD = 0;
   activos.forEach(a => { totalUSD += activoValorUSD(a, snap); });
   const usdars = snap ? snap.usdars : 0;
   const totalARS = totalUSD * usdars;
-
+ 
   document.getElementById('inv-total-usd').textContent = snap ? fmtUSD(totalUSD) : 'Sin cotizaciones';
   document.getElementById('inv-total-ars').textContent = snap ? fmt(totalARS)+' ARS' : 'Cargá el primer snapshot';
-
+ 
   // KPIs
   let prevTotalUSD = 0;
   if(prevSnap) activos.forEach(a => { prevTotalUSD += activoValorUSD(a, prevSnap); });
@@ -1663,14 +1676,14 @@ function renderInversiones() {
   const totalInvertidoARS = activos.reduce((s,a)=>s+getInvertidoARS(a.nombre),0);
   const rendTotal = totalInvertidoARS>0 ? ((totalARS-totalInvertidoARS)/totalInvertidoARS*100) : null;
   const snapFecha = snap ? (()=>{const d=new Date(snap.fecha+'T12:00:00');return d.getDate()+' '+MESES[d.getMonth()]+' '+d.getFullYear();})() : '—';
-
+ 
   document.getElementById('inv-kpis').innerHTML=`
     <div class="kpi-card"><div class="kpi-label">Variación mes</div><div class="kpi-value ${varMes===null?'':'varMes>=0?teal:red'}">${varMes===null?'—':fmtPct(varMes)}</div></div>
     <div class="kpi-card"><div class="kpi-label">Rendimiento total</div><div class="kpi-value ${rendTotal===null?'':(rendTotal>=0?'teal':'red')}">${rendTotal===null?'—':fmtPct(rendTotal)}</div></div>
     <div class="kpi-card"><div class="kpi-label">USD/ARS</div><div class="kpi-value">${snap?'$'+Math.round(usdars).toLocaleString('es-AR'):'—'}</div></div>
     <div class="kpi-card"><div class="kpi-label">Último snapshot</div><div class="kpi-value" style="font-size:13px;">${snapFecha}</div></div>
   `;
-
+ 
   // Posiciones
   const posEl = document.getElementById('inv-posiciones');
   const posiciones = activos.map(a => {
@@ -1682,12 +1695,12 @@ function renderInversiones() {
     return {a, valorUSD, varPct, und, peso};
   }).filter(p=>p.valorUSD>0 || getInvertidoARS(p.a.nombre)>0)
     .sort((a,b)=>b.valorUSD-a.valorUSD);
-
+ 
   if(!posiciones.length){
     posEl.innerHTML='<div class="empty-state">Cargá inversiones y un snapshot para ver tu cartera</div>';
     return;
   }
-
+ 
   posEl.innerHTML = posiciones.map(({a,valorUSD,varPct,und,peso})=>{
     const rendClass = varPct===null?'neu':varPct>=0?'pos':'neg';
     const rendStr = varPct===null?'—':fmtPct(varPct);
@@ -1704,7 +1717,7 @@ function renderInversiones() {
     </div>`;
   }).join('');
 }
-
+ 
 // ── SNAPSHOT MODAL ─────────────────────────────────────────
 function openSnapshot() {
   const snap = getLastSnapshot();
@@ -1714,7 +1727,7 @@ function openSnapshot() {
     getInvertidoARS(a.nombre)>0 || getUnidades(a.nombre)>0
   );
   const showActivos = usedActivos.length ? usedActivos : activos;
-
+ 
   el.innerHTML = showActivos.map(a => {
     const prev = snap ? (snap.cotizaciones[a.nombre]||'') : '';
     const unit = a.tipo==='CantidadARS'?'ARS':a.tipo==='CantidadUSD'?'USD':a.tipo==='USD'?'USD total':'ARS total';
@@ -1724,44 +1737,44 @@ function openSnapshot() {
       <span class="snap-unit">${unit}</span>
     </div>`;
   }).join('');
-
+ 
   if(snap) document.getElementById('snap-usdars').value = snap.usdars||'';
   document.getElementById('modal-snapshot').classList.add('open');
 }
-
+ 
 function closeSnapshot() { document.getElementById('modal-snapshot').classList.remove('open'); }
 function closeSnapshotOutside(e) { if(e.target===document.getElementById('modal-snapshot'))closeSnapshot(); }
-
+ 
 async function saveSnapshot() {
   const usdars = parseFloat(document.getElementById('snap-usdars').value);
   if(!usdars||usdars<=0){showToast('Ingresá la cotización USD/ARS');return;}
-
+ 
   const usedActivos = activos.filter(a=>getInvertidoARS(a.nombre)>0||getUnidades(a.nombre)>0);
   const showActivos = usedActivos.length?usedActivos:activos;
-
+ 
   const cotizaciones = {};
   showActivos.forEach(a=>{
     const id='snap-'+a.nombre.replace(/\s/g,'_');
     const val=parseFloat(document.getElementById(id).value)||0;
     if(val>0)cotizaciones[a.nombre]=val;
   });
-
+ 
   // Insert snapshot
   const snapData = await dbInsert('snapshots', {fecha: now.toISOString().split('T')[0], usdars});
   if(!snapData||!snapData[0]) { showToast('Error guardando snapshot'); return; }
   const snapId = snapData[0].id;
-
+ 
   // Insert cotizaciones
   const cotRows = Object.entries(cotizaciones).map(([activo,precio])=>({snapshot_id:snapId, activo, precio}));
   if(cotRows.length) await dbInsert('snapshot_cotizaciones', cotRows);
-
+ 
   const snap = { id:snapId, fecha: now.toISOString().split('T')[0], usdars, cotizaciones };
   snapshots.push(snap);
   closeSnapshot();
   showToast('Snapshot guardado');
   renderInversiones();
 }
-
+ 
 // ── HISTORIAL ──────────────────────────────────────────────
 function renderHistorial() {
   document.getElementById('historial-mes').textContent=MESES[hM]+' '+hY;
@@ -1787,15 +1800,15 @@ function renderHistorial() {
     </div>`;
   }).join('');
 }
-
+ 
 // ── ESTADO INICIAL ─────────────────────────────────────────
 let eiTCRows = []; // [{cat, monto, cuotasRestantes}]
-
+ 
 function renderEstadoInicial() {
   // Set default date
   if(!document.getElementById('ei-fecha').value)
     document.getElementById('ei-fecha').value = now.toISOString().split('T')[0];
-
+ 
   // Billeteras
   const billeteras = getBilleteras();
   const elB = document.getElementById('ei-billeteras-list');
@@ -1810,11 +1823,11 @@ function renderEstadoInicial() {
         <span style="font-size:11px;color:var(--text3);margin-left:4px;">ARS</span>
       </div>`).join('');
   }
-
+ 
   // TC rows
   renderEiTCRows();
 }
-
+ 
 function renderEiTCRows() {
   const el = document.getElementById('ei-tc-rows');
   if(!eiTCRows.length){ el.innerHTML=''; return; }
@@ -1838,32 +1851,32 @@ function renderEiTCRows() {
       </div>
     </div>`).join('');
 }
-
+ 
 function addEiTC() {
   eiTCRows.push({cat:'', monto:0, cuotasRestantes:0});
   renderEiTCRows();
 }
-
+ 
 function removeEiTC(i) {
   eiTCRows.splice(i,1);
   renderEiTCRows();
 }
-
+ 
 function guardarEstadoInicial() {
   const fecha = document.getElementById('ei-fecha').value;
   const efectivo = parseFloat(document.getElementById('ei-efectivo').value)||0;
   if(!fecha){ showToast('Elegí una fecha de inicio'); return; }
-
+ 
   const nuevasTxns = [];
   const ts = Date.now();
-
+ 
   // 1. Efectivo inicial → como ingreso especial
   if(efectivo>0) {
     nuevasTxns.push({id:ts, tipo:'Ingreso', cat:'Saldo inicial', monto:efectivo,
       moneda:'ARS', cotizacion:null, fecha, desc:'Efectivo en caja — estado inicial',
       pago:'efectivo', esEstadoInicial:true});
   }
-
+ 
   // 2. Billeteras virtuales
   getBilleteras().forEach((b,bi) => {
     const val = parseFloat(document.getElementById('ei-bill-'+b.nombre.replace(/\s/g,'_'))?.value)||0;
@@ -1874,7 +1887,7 @@ function guardarEstadoInicial() {
         unidades:val, esEstadoInicial:true});
     }
   });
-
+ 
   // 3. Compromisos TC → como cuotas "en curso" desde fecha de inicio
   eiTCRows.forEach((r,ri) => {
     if(!r.cat||!r.monto||!r.cuotasRestantes) return;
@@ -1895,7 +1908,7 @@ function guardarEstadoInicial() {
       esEstadoInicial: true
     });
   });
-
+ 
   txns = [...txns.filter(t=>!t.esEstadoInicial), ...nuevasTxns];
   localStorage.setItem('fin_txns', JSON.stringify(txns));
   eiTCRows = [];
@@ -1903,7 +1916,7 @@ function guardarEstadoInicial() {
   showToast('Estado inicial guardado');
   renderAnalytics(); renderHistorial(); renderPnl();
 }
-
+ 
 // ── CONFIG ─────────────────────────────────────────────────
 const TIPO_LABEL = {CantidadARS:'Cant · ARS', CantidadUSD:'Cant · USD', USD:'Monto USD', ARS:'Monto ARS'};
 const TIPO_OPTS = `
@@ -1912,7 +1925,7 @@ const TIPO_OPTS = `
   <option value="USD">Monto directo en USD</option>
   <option value="ARS">Monto directo en ARS</option>
 `;
-
+ 
 function renderConfig() {
   const tipos=['Fijo','Variable','Ingreso','Inversion','Inicio'];
   document.getElementById('stabs').innerHTML=tipos.map(t=>
@@ -1921,25 +1934,25 @@ function renderConfig() {
   const isInv   = configTipo === 'Inversion';
   const isInicio = configTipo === 'Inicio';
   const isCat   = !isInicio;
-
+ 
   // Cat list + add forms: only when not Inicio
   document.getElementById('cat-list-wrap').classList.toggle('hidden', isInicio);
   document.getElementById('add-simple-row').classList.toggle('hidden', isInv || isInicio);
   document.getElementById('add-activo-row').classList.toggle('hidden', !isInv || isInicio);
-
+ 
   // Estado inicial section: only when Inicio
   document.getElementById('estado-inicial-section').classList.toggle('hidden', !isInicio);
-
+ 
   if (isCat) renderCatList();
   if (isInicio) renderEstadoInicial();
 }
-
+ 
 function setConfigTipo(t){configTipo=t;renderConfig();}
-
+ 
 function renderCatList(){
   const list = document.getElementById('cat-list');
   const isInv = configTipo === 'Inversion';
-
+ 
   if (isInv) {
     if(!activos.length){list.innerHTML='<div class="empty-state">Sin activos de inversión</div>';return;}
     list.innerHTML = activos.map((a,i)=>`
@@ -1964,14 +1977,14 @@ function renderCatList(){
     ).join('');
   }
 }
-
+ 
 function updateActivoTipo(i, nuevoTipo) {
   const nombre = activos[i].nombre;
   activos[i].tipo = nuevoTipo;
   dbUpdate('activos', {nombre}, {tipo: nuevoTipo});
   showToast('Tipo actualizado');
 }
-
+ 
 function updateActivoBilletera(i, esBilletera) {
   const nombre = activos[i].nombre;
   activos[i].billetera = esBilletera;
@@ -1979,25 +1992,25 @@ function updateActivoBilletera(i, esBilletera) {
   updateBilleteraSelector();
   showToast(esBilletera ? 'Marcado como billetera virtual' : 'Quitado como billetera virtual');
 }
-
+ 
 function getBilleteras() {
   return activos.filter(a => a.billetera);
 }
-
+ 
 function updateBilleteraSelector() {
   const sel = document.getElementById('inp-billetera');
   const billeteras = getBilleteras();
   sel.innerHTML = '<option value="">No, efectivo directo</option>' +
     billeteras.map(b => `<option value="${b.nombre}">${b.nombre}</option>`).join('');
 }
-
+ 
 async function deleteCat(i){
   const nombre = cats[configTipo][i];
   cats[configTipo].splice(i,1);
   await dbDelete('categorias', {tipo: configTipo, nombre});
   renderCatList(); updateCats();
 }
-
+ 
 async function addCat(){
   const inp=document.getElementById('new-cat-input');
   const val=inp.value.trim();
@@ -2008,7 +2021,7 @@ async function addCat(){
   await dbInsert('categorias', {tipo: configTipo, nombre: val});
   inp.value=''; renderCatList(); updateCats(); showToast('Categoría agregada');
 }
-
+ 
 async function deleteActivo(i){
   const nombre = activos[i].nombre;
   activos.splice(i,1);
@@ -2022,7 +2035,7 @@ async function deleteActivo(i){
   }
   renderCatList(); updateCats();
 }
-
+ 
 async function addActivo(){
   const nombre = document.getElementById('new-activo-nombre').value.trim().toUpperCase();
   const tipo   = document.getElementById('new-activo-tipo').value;
@@ -2039,21 +2052,21 @@ async function addActivo(){
   document.getElementById('new-activo-tipo').value='';
   renderCatList(); updateCats(); showToast('Activo agregado');
 }
-
+ 
 async function guardarEstadoInicial() {
   const fecha = document.getElementById('ei-fecha').value;
   const efectivo = parseFloat(document.getElementById('ei-efectivo').value)||0;
   if(!fecha){ showToast('Elegí una fecha de inicio'); return; }
-
+ 
   const nuevasTxns = [];
   const ts = Date.now();
-
+ 
   if(efectivo>0) {
     nuevasTxns.push({id:ts, tipo:'Ingreso', cat:'Saldo inicial', monto:efectivo,
       moneda:'ARS', cotizacion:null, fecha, desc:'Efectivo en caja — estado inicial',
       pago:'efectivo', esEstadoInicial:true});
   }
-
+ 
   getBilleteras().forEach((b,bi) => {
     const val = parseFloat(document.getElementById('ei-bill-'+b.nombre.replace(/\s/g,'_'))?.value)||0;
     if(val>0) {
@@ -2063,7 +2076,7 @@ async function guardarEstadoInicial() {
         unidades:val, esEstadoInicial:true});
     }
   });
-
+ 
   eiTCRows.forEach((r,ri) => {
     if(!r.cat||!r.monto||!r.cuotasRestantes) return;
     nuevasTxns.push({
@@ -2076,27 +2089,26 @@ async function guardarEstadoInicial() {
       desfase: 1, esEstadoInicial: true
     });
   });
-
+ 
   // Delete existing estado inicial txns from DB
   await fetch(`${SUPABASE_URL}/rest/v1/transacciones?es_estado_inicial=eq.true`, {method:'DELETE', headers:H});
   txns = txns.filter(t=>!t.esEstadoInicial);
-
+ 
   if(nuevasTxns.length) {
     await dbInsert('transacciones', nuevasTxns.map(txnToDb));
     nuevasTxns.forEach(t => txns.push(t));
   }
-
+ 
   eiTCRows = [];
   renderEiTCRows();
   showToast('Estado inicial guardado');
   renderAnalytics(); renderHistorial(); renderPnl();
 }
-
+ 
 document.getElementById('new-cat-input').addEventListener('keydown',e=>{if(e.key==='Enter')addCat();});
 document.getElementById('new-activo-nombre').addEventListener('keydown',e=>{if(e.key==='Enter')addActivo();});
-
+ 
 init();
 </script>
 </body>
 </html>
-
