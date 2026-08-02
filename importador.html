@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Importador — Finanzas</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#F2F4F8; --surface:#fff; --border:rgba(13,27,62,0.09);
+  --text:#0D1B3E; --text2:#4A5878; --text3:#8C96AE;
+  --slate:#3B5180; --green:#1A5C42; --red:#8B2635; --amber:#7A5A1A;
+  --radius:10px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding:2rem 1rem;}
+.wrap{max-width:900px;margin:0 auto;}
+h1{font-size:20px;font-weight:500;margin-bottom:4px;color:var(--text);}
+.sub{font-size:13px;color:var(--text3);margin-bottom:2rem;}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;margin-bottom:1.5rem;box-shadow:0 1px 4px rgba(13,27,62,0.05);}
+.label{font-size:11px;font-weight:500;color:var(--text3);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.75rem;}
+textarea{width:100%;height:180px;border:1px solid var(--border);border-radius:8px;padding:0.75rem;font-size:12px;font-family:'DM Mono',monospace;color:var(--text);resize:vertical;outline:none;}
+textarea:focus{border-color:var(--slate);}
+.btn{padding:0.75rem 1.5rem;border:none;border-radius:8px;font-size:14px;font-weight:500;font-family:'DM Sans',sans-serif;cursor:pointer;transition:opacity 0.15s;display:inline-flex;align-items:center;gap:8px;}
+.btn-primary{background:var(--slate);color:white;}
+.btn-success{background:var(--green);color:white;}
+.btn-primary:hover,.btn-success:hover{opacity:0.88;}
+.btn:disabled{opacity:0.5;cursor:not-allowed;}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-bottom:1.5rem;}
+.stat{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:0.85rem 1rem;}
+.stat-val{font-size:22px;font-weight:500;font-family:'DM Mono',monospace;color:var(--slate);}
+.stat-label{font-size:11px;color:var(--text3);margin-top:3px;}
+table{width:100%;border-collapse:collapse;font-size:12px;}
+th{background:var(--bg);padding:8px 10px;text-align:left;font-weight:500;color:var(--text2);border-bottom:1px solid var(--border);white-space:nowrap;font-size:11px;letter-spacing:0.03em;}
+td{padding:7px 10px;border-bottom:1px solid var(--border);color:var(--text);font-family:'DM Mono',monospace;white-space:nowrap;}
+tr:last-child td{border-bottom:none;}
+.badge{display:inline-block;padding:2px 7px;border-radius:4px;font-size:10px;font-family:'DM Sans',sans-serif;font-weight:500;}
+.b-ingreso{background:#EBF7F2;color:#1A5C42;}
+.b-fijo{background:#F8EDEF;color:#8B2635;}
+.b-variable{background:#F9F4E8;color:#7A5A1A;}
+.b-inversion{background:#EBF0FA;color:#1B3A6B;}
+.scroll{overflow-x:auto;}
+.progress-bar{height:6px;background:var(--bg);border-radius:3px;overflow:hidden;margin-top:1rem;}
+.progress-fill{height:100%;background:var(--slate);border-radius:3px;transition:width 0.3s;}
+.log{margin-top:1rem;font-size:12px;font-family:'DM Mono',monospace;color:var(--text2);max-height:120px;overflow-y:auto;background:var(--bg);border-radius:8px;padding:0.75rem;}
+.err{color:var(--red);}
+.ok{color:var(--green);}
+.warn{color:var(--amber);}
+.row-actions{display:flex;gap:10px;align-items:center;margin-top:1rem;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Importador de datos históricos</h1>
+  <div class="sub">Pegá el contenido de tu Excel (copiá desde la hoja, incluyendo el header) y revisá el mapeo antes de importar.</div>
+ 
+  <div class="card">
+    <div class="label">Pegá el contenido del Excel aquí</div>
+    <textarea id="csv-input" placeholder="Fecha	Concepto	Tipo	Cuenta	Ingreso	Gasto	Credito	Deuda	Cantidad_Adquirida	Cotizacion	Capital	Cuotas	Cotizacion_USD
+31/12/2017	Estado inicial Pesos	Ingreso	Otro							66790,11		..."></textarea>
+    <div class="row-actions">
+      <button class="btn btn-primary" onclick="parsear()">Analizar datos</button>
+      <span id="parse-msg" style="font-size:13px;color:var(--text3);"></span>
+    </div>
+  </div>
+ 
+  <div id="preview-section" style="display:none;">
+    <div class="stats" id="stats"></div>
+ 
+    <div class="card">
+      <div class="label">Preview — primeras 50 filas</div>
+      <div class="scroll"><table id="preview-table"><thead></thead><tbody></tbody></table></div>
+    </div>
+ 
+    <div class="card">
+      <div class="label">Importar a Supabase</div>
+      <div style="font-size:13px;color:var(--text2);margin-bottom:1rem;">Se van a importar <strong id="total-count">0</strong> transacciones. Las que ya existen con el mismo ID se omiten.</div>
+      <button class="btn btn-success" id="import-btn" onclick="importar()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Importar todo
+      </button>
+      <div class="progress-bar" id="progress-bar" style="display:none;"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+      <div class="log" id="import-log" style="display:none;"></div>
+    </div>
+  </div>
+</div>
+ 
+<script>
+const SUPABASE_URL = 'https://cveaszkzffgcgwoqmifn.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN2ZWFzemt6ZmZnY2d3b3FtaWZuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU1Mzg5ODQsImV4cCI6MjEwMTExNDk4NH0.vwbZv9SvS6lYGIQs0BReDm58wgY5MACFvzjXUlZJuh0';
+const H = {'Content-Type':'application/json','apikey':SUPABASE_KEY,'Authorization':'Bearer '+SUPABASE_KEY};
+ 
+let parsedRows = [];
+ 
+// Parse Spanish number: "15.613,06" → 15613.06
+function parseNum(s) {
+  if (!s || s.trim() === '') return null;
+  const clean = s.trim().replace(/\./g,'').replace(',','.');
+  const n = parseFloat(clean);
+  return isNaN(n) ? null : n;
+}
+ 
+// Parse date DD/MM/YYYY → YYYY-MM-DD
+function parseDate(s) {
+  if (!s || s.trim() === '') return null;
+  const parts = s.trim().split('/');
+  if (parts.length !== 3) return null;
+  const [d, m, y] = parts;
+  return `${y.length === 2 ? '20'+y : y}-${m.padStart(2,'0')}-${d.padStart(2,'0')}`;
+}
+ 
+function mapTipo(t) {
+  const m = {'Ingreso':'Ingreso','Variable':'Variable','Fijo':'Fijo','Inversión':'Inversion','Inversion':'Inversion'};
+  return m[t?.trim()] || t?.trim() || 'Variable';
+}
+ 
+function mapRow(row, idx) {
+  const fecha     = parseDate(row['Fecha']);
+  const concepto  = row['Concepto']?.trim() || '';
+  const tipoRaw   = row['Tipo']?.trim() || '';
+  const cuenta    = row['Cuenta']?.trim() || '';
+  const ingreso   = parseNum(row['Ingreso']);
+  const gasto     = parseNum(row['Gasto']);
+  // Credito ignorado (préstamos a terceros, no contemplado en la app)
+  const deuda     = parseNum(row['Deuda']);
+  const cantidad  = parseNum(row['Cantidad_Adquirida']);
+  const cotiz     = parseNum(row['Cotizacion']);
+  const capital   = parseNum(row['Capital']);
+  const cuotas    = parseNum(row['Cuotas']);
+  const cotizUSD  = parseNum(row['Cotizacion_USD']);
+ 
+  if (!fecha || !concepto) return null;
+ 
+  const tipo = mapTipo(tipoRaw);
+  // ID: use row index + base timestamp to get stable unique bigints
+  const id = 1000000000000 + idx;
+ 
+  let monto = null, pago = 'efectivo', moneda = 'ARS';
+  let cuotasN = null, montoCuota = null, unidades = null;
+  let esBilleteraRetiro = false;
+ 
+  if (ingreso) {
+    monto = ingreso;
+    pago = 'efectivo';
+  } else if (gasto) {
+    monto = gasto;
+    pago = 'efectivo';
+  } else if (deuda) {
+    monto = Math.abs(deuda);
+    // Deuda negativa = retiro/pago; positiva = deuda inicial
+    pago = deuda < 0 ? 'efectivo' : 'cuotas';
+    if (pago === 'cuotas') {
+      cuotasN = cuotas ? Math.round(cuotas) : 1;
+      montoCuota = monto / cuotasN;
+    }
+  } else if (cantidad) {
+    monto = Math.abs(cantidad * (cotiz || 1));
+    unidades = cantidad;
+    pago = 'efectivo';
+    esBilleteraRetiro = cantidad < 0;
+  } else if (capital) {
+    monto = capital;
+    pago = 'efectivo';
+  } else {
+    return null; // no amount, skip
+  }
+ 
+  // Units for investments
+  if (tipo === 'Inversion' && cantidad != null) unidades = cantidad;
+ 
+  // Currency: if cotizacion_USD present, row is in USD context
+  if (cotizUSD && tipo === 'Inversion') moneda = 'USD';
+ 
+  return {
+    id, tipo, cat: cuenta, monto,
+    moneda, cotizacion: cotiz || null,
+    fecha, descripcion: concepto, pago,
+    cuotas: cuotasN, cuotas_pagadas: 0,
+    monto_cuota: montoCuota, desfase: pago === 'cuotas' ? 1 : null,
+    unidades, billetera: null,
+    es_billetera_retiro: esBilleteraRetiro,
+    es_pago_resumen_tc: false, es_estado_inicial: false
+  };
+}
+ 
+function parsear() {
+  const raw = document.getElementById('csv-input').value.trim();
+  if (!raw) { document.getElementById('parse-msg').textContent = 'Pegá datos primero'; return; }
+ 
+  // Detect separator (tab or semicolon or comma)
+  const firstLine = raw.split('\n')[0];
+  const sep = firstLine.includes('\t') ? '\t' : firstLine.includes(';') ? ';' : ',';
+ 
+  const lines = raw.split('\n').filter(l => l.trim());
+  const headers = lines[0].split(sep).map(h => h.trim().replace(/"/g,''));
+ 
+  parsedRows = [];
+  let skipped = 0;
+ 
+  for (let i = 1; i < lines.length; i++) {
+    const vals = lines[i].split(sep).map(v => v.trim().replace(/"/g,''));
+    const row = {};
+    headers.forEach((h, j) => { row[h] = vals[j] || ''; });
+    const mapped = mapRow(row, i);
+    if (mapped) parsedRows.push(mapped);
+    else skipped++;
+  }
+ 
+  if (!parsedRows.length) {
+    document.getElementById('parse-msg').textContent = 'No se encontraron filas válidas. Revisá el formato.';
+    return;
+  }
+ 
+  // Stats
+  const counts = {Ingreso:0, Fijo:0, Variable:0, Inversion:0};
+  parsedRows.forEach(r => { if(counts[r.tipo]!==undefined) counts[r.tipo]++; else counts.Variable++; });
+ 
+  document.getElementById('stats').innerHTML = `
+    <div class="stat"><div class="stat-val">${parsedRows.length}</div><div class="stat-label">Total filas</div></div>
+    <div class="stat"><div class="stat-val" style="color:var(--green)">${counts.Ingreso}</div><div class="stat-label">Ingresos</div></div>
+    <div class="stat"><div class="stat-val" style="color:var(--red)">${counts.Fijo+counts.Variable}</div><div class="stat-label">Gastos</div></div>
+    <div class="stat"><div class="stat-val" style="color:#1B3A6B">${counts.Inversion}</div><div class="stat-label">Inversiones</div></div>
+    <div class="stat"><div class="stat-val" style="color:var(--text3)">${skipped}</div><div class="stat-label">Omitidas</div></div>
+  `;
+ 
+  // Preview table
+  const preview = parsedRows.slice(0, 50);
+  const badgeClass = {Ingreso:'b-ingreso',Fijo:'b-fijo',Variable:'b-variable',Inversion:'b-inversion'};
+  document.querySelector('#preview-table thead').innerHTML = `
+    <tr><th>Fecha</th><th>Tipo</th><th>Categoría</th><th>Descripción</th><th>Monto</th><th>Pago</th><th>Moneda</th><th>Unidades</th></tr>`;
+  document.querySelector('#preview-table tbody').innerHTML = preview.map(r => `
+    <tr>
+      <td>${r.fecha}</td>
+      <td><span class="badge ${badgeClass[r.tipo]||'b-variable'}">${r.tipo}</span></td>
+      <td>${r.cat}</td>
+      <td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;">${r.descripcion}</td>
+      <td>${r.monto?.toLocaleString('es-AR',{minimumFractionDigits:2})}</td>
+      <td>${r.pago}${r.cuotas?' ('+r.cuotas+'c)':''}</td>
+      <td>${r.moneda}</td>
+      <td>${r.unidades ?? '—'}</td>
+    </tr>`).join('');
+ 
+  document.getElementById('total-count').textContent = parsedRows.length;
+  document.getElementById('preview-section').style.display = 'block';
+  document.getElementById('parse-msg').textContent = `✓ ${parsedRows.length} filas analizadas (${skipped} omitidas sin monto)`;
+  document.getElementById('parse-msg').style.color = 'var(--green)';
+}
+ 
+async function importar() {
+  if (!parsedRows.length) return;
+  const btn = document.getElementById('import-btn');
+  btn.disabled = true;
+  const bar = document.getElementById('progress-bar');
+  const fill = document.getElementById('progress-fill');
+  const log = document.getElementById('import-log');
+  bar.style.display = 'block';
+  log.style.display = 'block';
+  log.innerHTML = '';
+ 
+  const BATCH = 200;
+  let imported = 0, errors = 0;
+ 
+  function addLog(msg, cls='') {
+    log.innerHTML += `<div class="${cls}">${msg}</div>`;
+    log.scrollTop = log.scrollHeight;
+  }
+ 
+  addLog(`Importando ${parsedRows.length} filas en lotes de ${BATCH}...`);
+ 
+  for (let i = 0; i < parsedRows.length; i += BATCH) {
+    const batch = parsedRows.slice(i, i + BATCH);
+    try {
+      const res = await fetch(`${SUPABASE_URL}/rest/v1/transacciones`, {
+        method: 'POST',
+        headers: {...H, 'Prefer': 'resolution=ignore-duplicates,return=minimal'},
+        body: JSON.stringify(batch)
+      });
+      if (res.ok) {
+        imported += batch.length;
+        addLog(`✓ Lote ${Math.floor(i/BATCH)+1}: ${batch.length} filas importadas`, 'ok');
+      } else {
+        const err = await res.text();
+        errors += batch.length;
+        addLog(`✗ Lote ${Math.floor(i/BATCH)+1}: ${err.slice(0,120)}`, 'err');
+      }
+    } catch(e) {
+      errors += batch.length;
+      addLog(`✗ Error de red: ${e.message}`, 'err');
+    }
+    fill.style.width = `${Math.min(100, ((i+BATCH)/parsedRows.length)*100)}%`;
+  }
+ 
+  fill.style.width = '100%';
+  addLog('─────────────────────', '');
+  addLog(`Completado: ${imported} importadas, ${errors} con error.`, imported > 0 ? 'ok' : 'err');
+  if (imported > 0) addLog('¡Abrí la app para ver tus datos históricos!', 'ok');
+  btn.disabled = false;
+}
+</script>
+</body>
+</html>
