@@ -448,7 +448,13 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
     <span id="historial-mes"></span>
     <button onclick="changeMonth('h',1)">&#8594;</button>
   </div>
-  <div class="section-label">Transacciones</div>
+  <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:1rem;">
+    <button class="stab active" id="hf-Todos"     onclick="setHistorialFiltro('Todos')">Todos</button>
+    <button class="stab"        id="hf-Fijo"      onclick="setHistorialFiltro('Fijo')">Fijo</button>
+    <button class="stab"        id="hf-Variable"  onclick="setHistorialFiltro('Variable')">Variable</button>
+    <button class="stab"        id="hf-Ingreso"   onclick="setHistorialFiltro('Ingreso')">Ingreso</button>
+    <button class="stab"        id="hf-Inversion" onclick="setHistorialFiltro('Inversion')">Inversión</button>
+  </div>
   <div class="card" id="txn-list"></div>
 </div>
  
@@ -686,6 +692,16 @@ let configTipo = 'Fijo';
 let now = new Date();
 let aY = now.getFullYear(), aM = now.getMonth();
 let hY = now.getFullYear(), hM = now.getMonth();
+let historialFiltro = 'Todos';
+ 
+function setHistorialFiltro(f) {
+  historialFiltro = f;
+  ['Todos','Fijo','Variable','Ingreso','Inversion'].forEach(x => {
+    const el = document.getElementById('hf-'+x);
+    if(el) el.className = 'stab' + (x===f ? ' active' : '');
+  });
+  renderHistorial();
+}
  
 // ── INIT ───────────────────────────────────────────────────
 async function init() {
@@ -1778,11 +1794,15 @@ async function saveSnapshot() {
 // ── HISTORIAL ──────────────────────────────────────────────
 function renderHistorial() {
   document.getElementById('historial-mes').textContent=MESES[hM]+' '+hY;
-  const data=getTxns(hY,hM).sort((a,b)=>new Date(b.fecha)-new Date(a.fecha));
+  let data = getTxns(hY,hM).sort((a,b)=>new Date(b.fecha)-new Date(a.fecha));
+  // Apply filter
+  if (historialFiltro !== 'Todos') {
+    data = data.filter(t => t.tipo === historialFiltro);
+  }
   const el=document.getElementById('txn-list');
   if(!data.length){el.innerHTML='<div class="empty-state">Sin transacciones este mes</div>';return;}
-  const dotC={Fijo:'#B03A2E',Variable:'#8A5C00',Ingreso:'#1D7A4F',Inversion:'#0F6E56'};
-  const amtC={Fijo:'var(--red)',Variable:'var(--amber)',Ingreso:'var(--green)',Inversion:'var(--teal)'};
+  const dotC={Fijo:'#8B2635',Variable:'#7A5A1A',Ingreso:'#1A5C42',Inversion:'#1B3A6B'};
+  const amtC={Fijo:'var(--red)',Variable:'var(--amber)',Ingreso:'var(--green)',Inversion:'var(--blue)'};
   const signs={Fijo:'-',Variable:'-',Ingreso:'+',Inversion:'→'};
   el.innerHTML=data.map(t=>{
     const d=new Date(t.fecha+'T12:00:00');
